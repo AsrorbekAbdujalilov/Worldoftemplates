@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-from .form import *
+from .forms import *
 
 def RegisterPage(request):
   form = CreateUserForm()
@@ -24,7 +24,7 @@ def RegisterPage(request):
       username = form.cleaned_data.get('username')
 
       messages.success(request, 'Hi,' + username)
-      return redirect('login')
+      return redirect('Login')
 
   context = {'form':form}
   return render(request, 'html/register.html', context)
@@ -37,7 +37,7 @@ def LoginPage(request):
 
   if user is not None:
     login(request, user)
-    redirect('/')
+    return redirect('Home')
   else:
     messages.info(request, 'Username or Password is incorrect')
 

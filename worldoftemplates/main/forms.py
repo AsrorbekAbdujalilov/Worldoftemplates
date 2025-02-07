@@ -18,3 +18,14 @@ class CreateUserForm(UserCreationForm):
       'password1': forms.PasswordInput(attrs={'placeholder': 'Enter password'}),
       'password2': forms.PasswordInput(attrs={'placeholder': 'Confirm password'}),
     }
+
+  def __init__(self, *args, **kwargs):
+    super(CreateUserForm, self).__init__(*args, **kwargs)
+
+      
+    self.fields['username'].widget.attrs.update({'placeholder': 'Username'})
+    self.fields['first_name'].widget.attrs.update({'placeholder': 'First name'})
+    self.fields['last_name'].widget.attrs.update({'placeholder': 'Last name'})
+    self.fields['email'].widget.attrs.update({'placeholder': 'Email'})
+    self.fields['password1'].widget.attrs.update({'placeholder': 'Password'})
+    self.fields['password2'].widget.attrs.update({'placeholder': 'Confirm password'})

@@ -35,18 +35,11 @@
             <h2>REGISTER</h2>
             <form action="#" method="POST">
                 
-                <input type="text" id="username" name="username" required placeholder="Username">
-                
-                <input type="text" id="first_name" name="first_name" required placeholder="First Name">
+                {% csrf_token %}
 
-                <input type="text" id="last_name" name="last_name" required placeholder="Last Name">
-                
-                <input type="text" id="email" name="email" required placeholder="Email or a Phone Number">
-                             
-                <input type="password" id="password" name="password" required placeholder="Password">
-
-                
-                <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm Password">
+                {% for forms in form %}
+                    {{forms}}
+                {% endfor %}
 
                 <button type="submit" class="submit-btn">Register</button>
             </form>
