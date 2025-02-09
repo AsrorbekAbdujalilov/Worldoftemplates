@@ -45,4 +45,5 @@ def LoginPage(request):
   return render(request, 'html/login.html', context)
 
 def Home(request):
-  return HttpResponse('home')
+  context = {}
+  return render(request, 'html/home.html', context)
