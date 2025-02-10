@@ -24,20 +24,29 @@
             </div>
             <div class="right-side">
                 
-                <a href="" class="home">
+                <a href="{% url 'Home' %}" class="home">
                     Home
                 </a>
                 <a href="" class="product-type">
                     Product type
                 </a>
-                <a href="register and login/login page/login page-eng.html" class="login">
+                {% if user.is_authenticated %}
+                <a href="{% url 'Logout' %}" class="login">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'Login' %}" class="login">
                     Login
                 </a>
-                <a href="register and login/register page/register page-eng.html" class="register">
-                    Register
+                {% endif %}
+                <a href="" class="register">
+                    Contact
                 </a>
-                <a href="" class="about-us">
+                <a href="{% url 'About' %}" class="about-us">
                     About us
+                </a>
+                <a href="" class="home">
+                    Profile
                 </a>
             </div>
         </div>

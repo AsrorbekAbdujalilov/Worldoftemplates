@@ -44,6 +44,14 @@ def LoginPage(request):
   context = {}
   return render(request, 'html/login.html', context)
 
+def Logout(request):
+  logout(request)
+  return redirect('Login')
+
 def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
+
+def Aboutus(request):
+  context = {}
+  return render(request, 'html/aboutus.html', context)
