@@ -55,3 +55,7 @@ def Home(request):
 def Aboutus(request):
   context = {}
   return render(request, 'html/aboutus.html', context)
+
+def ContactPage(request):
+  context = {}
+  return render(request, 'html/contact.html', context)

@@ -14,15 +14,7 @@ body {
   max-width: 600px;
   padding: 20px;
 }
-h2 {
-  font-size: 50px;
-  background: linear-gradient(45deg, #ff4b2b, #ff416c);
-  -webkit-text-fill-color: transparent;
-  transition: transform 0.3s;
-}
-h2:hover {
-  transform: scale(1.1);
-}
+
 h3 {
   font-size: 20px;
   margin: 5px 0;

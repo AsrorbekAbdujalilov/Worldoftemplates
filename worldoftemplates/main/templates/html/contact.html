@@ -1,20 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+{% extends 'html/main.html' %}
+
+{% load static %}
+
+
+    {% block content %}
+
     <style>
+        h1 {
+            font-size: 50px;
+            background: linear-gradient(45deg, #8b1703, #d855b1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s;
+        }
+        h1:hover {
+            transform: scale(1.1);
+            }
     </style>
-</head>
-<body>
+
+    <link rel="stylesheet" href="{% static '/css/contact.css' %}">
+
     <div class="container">
         <h3>Any problems with presentations?</h3>
         <h3>Contact us, we will fix issues</h3>
         <h3>You need a template for PPTX presentations?</h3>
         <h3>Want us to create a website for you?</h3>
         <h3>We can help you create</h3>
-        <h2>Contact Us</h2>
+        <h1>Contact Us</h1>
         <div class="contact-box">
             <div class="box">
                 <h3>Email:</h3>
@@ -26,5 +38,5 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    {% endblock %}
