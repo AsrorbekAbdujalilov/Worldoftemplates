@@ -30,16 +30,17 @@ def RegisterPage(request):
   return render(request, 'html/register.html', context)
 
 def LoginPage(request):
-  username = request.POST.get('username')
-  password = request.POST.get('password')
+  if request.method == 'POST':
+    username = request.POST.get('username')
+    password = request.POST.get('password')
 
-  user = authenticate(request, username=username, password=password)
+    user = authenticate(request, username=username, password=password)
 
-  if user is not None:
-    login(request, user)
-    return redirect('Home')
-  else:
-    messages.info(request, 'Username or Password is incorrect')
+    if user is not None:
+      login(request, user)
+      return redirect('Home')
+    else:
+      messages.info(request, 'Username or Password is incorrect')
 
   context = {}
   return render(request, 'html/login.html', context)

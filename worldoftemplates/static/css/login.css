@@ -34,7 +34,6 @@ a {
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     width: 450px;
-    height: 290px;
 }
 
 h2 {
@@ -73,7 +72,7 @@ input:focus {
 .submit-btn {
     background-color: green;
     opacity: 1;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     color: #fff;
     padding: 10px;
     border: none;

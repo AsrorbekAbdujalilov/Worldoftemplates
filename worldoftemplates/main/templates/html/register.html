@@ -16,18 +16,19 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center; 
-            align-items: center;
-            height: 100vh;
-            background-image: url("{% static '/images/background.jpg' %}");
-            background-size: 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh;
+    background-image: url("{% static '/images/OIG4.jfif' %}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
     </style>
+
 </head>
 <body>
     <div class="container">
@@ -43,6 +44,10 @@
 
                 <button type="submit" class="submit-btn">Register</button>
             </form>
+                <ul style="color: red; font-size: 14px; font-family: 'Trebuchet MS', sans-serif; list-style: none; padding: 5px;">
+                    {{ form.errors }}
+                </ul>    
+                <p style="margin: 5px;">If you already have an account, here <a href="{% url 'Login' %}">Login!</a></p>
         </div>
     </div>
 </body>
