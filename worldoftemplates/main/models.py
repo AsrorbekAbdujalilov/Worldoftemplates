@@ -3,12 +3,11 @@ from django.contrib.auth.models import *
 
 # Customer Model
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    username = models.CharField(max_length=200, null=True)
-    first_name = models.CharField(max_length=200, null=True)
-    last_name = models.CharField(max_length=200, null=True)
-    email = models.EmailField(null=True, unique=True)
-    password = models.CharField(max_length=100, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    username = models.CharField(max_length=200, null=True, blank=True)
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(null=True, unique=True, blank=True)
 
     def __str__(self):
         return self.username if self.username else "Unnamed Customer"
