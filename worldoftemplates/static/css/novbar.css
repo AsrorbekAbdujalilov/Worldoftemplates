@@ -5,7 +5,6 @@ body {
 .header {
     display: flex;
     height: 70px;
-    border-bottom: 1px solid rgb(222, 222, 222);
     margin-bottom: 20px;
     justify-content: space-between;
     align-items: center;
@@ -15,7 +14,8 @@ body {
     right: 0;
     padding-right: 24px;
     z-index: 100;    
-    background-color: #06471c;
+    background: linear-gradient(45deg, #023047,#219ebc);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.562);
     
     
 }
@@ -35,6 +35,7 @@ body {
     cursor: pointer;
 }
 .project-name {
+    color: white;
     font-family: Lexend Giga;
     font-weight: bold;
     margin-left: 10px;
@@ -74,7 +75,7 @@ a::after {
     position: absolute;
     width: 100%;
     height: 1.5px;
-    background-color: orange;
+    background-color: #fb8500;
     bottom: 0;
     left: 0;
     transform: scaleX(0);
@@ -89,7 +90,7 @@ a:hover::after {
     
 }
 a:hover {
-    color: orange;
+    color: #fb8500;
     
  
     transition: color 0.4s;

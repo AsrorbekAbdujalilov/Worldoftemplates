@@ -73,11 +73,11 @@
 
       /* Colorful Background Effects */
       .odd {
-        background-color: #e0f7fa;
+        background: linear-gradient(45deg, #090c9b,#3066be);
       }
 
       .even {
-        background-color: #fff3e0;
+        background: linear-gradient(45deg, #00b2ca,#7dcfb6);
       }
 
       /* Divider between sections */
