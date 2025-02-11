@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -66,19 +67,24 @@ input {
 
 input:focus {
     border-color: #0066cc;
+    box-shadow: 0 0 10px #0066cc;
     outline: none;
 }
 
 .submit-btn {
-    background-color: green;
+    background: linear-gradient(45deg, #023047,#219ebc);
+    border: none;
     opacity: 1;
     margin-bottom: 5px;
     color: #fff;
     padding: 10px;
-    border: none;
     border-radius: 5px;
     font-size: 16px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
     cursor: pointer;
+    transition: opacity 0.3s;
 }
 
 .submit-btn:hover {
