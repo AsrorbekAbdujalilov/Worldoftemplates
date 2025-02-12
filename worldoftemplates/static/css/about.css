@@ -60,7 +60,7 @@
       .name {
         font-size: 20px; /* Smaller font size */
         font-weight: bold;
-        color: #333;
+        color: black;
         margin: 5px 0;
         transition: color 0.3s ease;
       }
@@ -73,11 +73,19 @@
 
       /* Colorful Background Effects */
       .odd {
+<<<<<<<< HEAD:worldoftemplates/static/css/about.css
         background: linear-gradient(45deg, #090c9b,#3066be);
       }
 
       .even {
         background: linear-gradient(45deg, #00b2ca,#7dcfb6);
+========
+        background: linear-gradient(45deg, #90e0ef, #00b4d8);
+      }
+
+      .even {
+        background: linear-gradient(45deg, #118ab2, #073b4c);
+>>>>>>>> 51544f9 (Commit):worldoftemplates/static/css/aboutuss.css
       }
 
       /* Divider between sections */
@@ -104,4 +112,13 @@
           width: 80px; /* Smaller image size for small screens */
           height: 80px;
         }
+      }
+
+
+      .even .informations {
+        color: white;
+      }
+
+      .even .name {
+        color: white;
       }

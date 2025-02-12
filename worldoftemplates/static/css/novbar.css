@@ -15,7 +15,10 @@ body {
     padding-right: 24px;
     z-index: 100;    
     background: linear-gradient(45deg, #023047,#219ebc);
+<<<<<<<< HEAD:worldoftemplates/static/css/novbar.css
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.562);
+========
+>>>>>>>> 51544f9 (Commit):worldoftemplates/static/css/navbarr.css
     
     
 }
@@ -41,6 +44,7 @@ body {
     margin-left: 10px;
     font-size: 28px;
     cursor: pointer;
+    color: white;
 
 }
 
