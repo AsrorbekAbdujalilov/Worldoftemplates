@@ -73,19 +73,13 @@
 
       /* Colorful Background Effects */
       .odd {
-<<<<<<<< HEAD:worldoftemplates/static/css/about.css
-        background: linear-gradient(45deg, #090c9b,#3066be);
+        background: linear-gradient(45deg, #3066be, #090c9b);
       }
 
-      .even {
-        background: linear-gradient(45deg, #00b2ca,#7dcfb6);
-========
-        background: linear-gradient(45deg, #90e0ef, #00b4d8);
-      }
+  
 
       .even {
         background: linear-gradient(45deg, #118ab2, #073b4c);
->>>>>>>> 51544f9 (Commit):worldoftemplates/static/css/aboutuss.css
       }
 
       /* Divider between sections */
