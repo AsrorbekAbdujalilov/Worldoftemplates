@@ -6,6 +6,8 @@ urlpatterns = [
   path('register/',RegisterPage, name='Register'),
   path('logout/', Logout, name='Logout'),
 
+  path('activate/<uidb64>/<token>/', Activate, name='activate'),
+
   path('', Home, name='Home'),
 
   path('about/', Aboutus, name='About'),

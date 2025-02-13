@@ -62,7 +62,12 @@
             </form>
                 <ul style="color: red; font-size: 14px; font-family: 'Trebuchet MS', sans-serif; list-style: none; padding: 5px;">
                     {{ form.errors }}
-                </ul>    
+                </ul> 
+                <div>
+                    {% for message in messages %}
+                        <p style="color: red; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 14px;">{{message}}</p>
+                    {% endfor %}
+                </div>   
                 <p style="margin: 5px;">If you already have an account, here <a href="{% url 'Login' %}">Login!</a></p>
         </div>
     </div>
