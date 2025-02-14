@@ -19,6 +19,7 @@ from django.http import HttpResponse
 
 from .forms import *
 from .tokens import Tokenis
+from .decorators import *
 
 
 def Activate(request, uidb64, token):
@@ -55,7 +56,7 @@ def Verification(request, user, to_email):
   else:
     messages.error(request, f'Problem sending email to {to_email}, check if you type correctly')
 
-
+@authenticated
 def RegisterPage(request):
   form = CreateUserForm()
 
@@ -75,10 +76,12 @@ def RegisterPage(request):
   context = {'form':form}
   return render(request, 'html/register.html', context)
 
+@authenticated
 def ActivationPage(request):
   context = {}
   return render(request, 'html/verification.html', context)
 
+@authenticated
 def LoginPage(request):
   if request.method == 'POST':
     username = request.POST.get('username')
@@ -103,10 +106,12 @@ def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
 
+@login_required(login_url='Login')
 def Aboutus(request):
   context = {}
   return render(request, 'html/aboutus.html', context)
 
+@login_required(login_url='Login')
 def ContactPage(request):
   context = {}
   return render(request, 'html/contact.html', context)
