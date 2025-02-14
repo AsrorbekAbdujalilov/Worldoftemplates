@@ -69,11 +69,15 @@ def RegisterPage(request):
         user.is_active = False 
         user.save()
         Verification(request, user, form.cleaned_data.get('email'))
-        return redirect('Login')
+        return redirect('activate')
 
 
   context = {'form':form}
   return render(request, 'html/register.html', context)
+
+def ActivationPage(request):
+  context = {}
+  return render(request, 'html/verification.html', context)
 
 def LoginPage(request):
   if request.method == 'POST':

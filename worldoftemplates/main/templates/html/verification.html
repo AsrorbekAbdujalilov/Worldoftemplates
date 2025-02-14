@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login page</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static '/css/verificationn.css' %}">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            height: 100vh;
+            background-image: url("{% static '/images/OIG4.jfif' %}");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>ACTIVATE YOUR EMAIL</h2>
+            <img src="{% static '/images/images.png' %}" class="verification-btn" alt="ACTIVATE">
+        </div>
+    </div>
+</body>
+</html>
