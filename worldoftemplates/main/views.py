@@ -70,7 +70,7 @@ def RegisterPage(request):
         user.is_active = False 
         user.save()
         Verification(request, user, form.cleaned_data.get('email'))
-        return redirect('activate')
+        return redirect('Activation')
 
 
   context = {'form':form}

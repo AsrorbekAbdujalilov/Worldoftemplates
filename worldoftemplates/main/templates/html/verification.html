@@ -36,6 +36,11 @@
         <div class="form-container">
             <h2>ACTIVATE YOUR EMAIL</h2>
             <img src="{% static '/images/images.png' %}" class="verification-btn" alt="ACTIVATE">
+            <div>
+                {% for message in messages %}
+                    <p style="color: rgb(47, 0, 255); font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 20px">{{message}}</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>
