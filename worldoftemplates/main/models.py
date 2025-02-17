@@ -5,6 +5,7 @@ from django.contrib.auth.models import *
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     username = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     first_name = models.CharField(max_length=200, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(null=True, unique=True, blank=True)
@@ -17,6 +18,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to="product_files/", null=True, blank=True)
+    img = models.ImageField(upload_to='product_files/preview', null=True, blank=True)
     office_created = models.BigIntegerField(null=True, blank=True)
     morph = models.BigIntegerField(null=True, blank=True)
     product_type = models.BigIntegerField(null=True, blank=True)

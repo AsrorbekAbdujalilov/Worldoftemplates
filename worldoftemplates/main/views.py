@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -13,13 +11,16 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse
-
 # Create your views here.
 
 from .forms import *
 from .tokens import Tokenis
 from .decorators import *
+
+from pptx import Presentation
+from PIL import Image
+import os
+
 
 
 def Activate(request, uidb64, token):
