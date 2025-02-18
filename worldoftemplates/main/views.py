@@ -107,6 +107,13 @@ def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
 
+def Products(request, pk):
+  presentations = Product.objects.filter(product_type='Animation')
+  presentation = Product.objects.get(id=pk)
+
+  context={'presentation':presentation, 'presentations':presentations}
+  return render(request, 'html/product.html', context)
+
 @login_required(login_url='Login')
 def Aboutus(request):
   context = {}

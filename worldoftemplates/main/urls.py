@@ -10,6 +10,7 @@ urlpatterns = [
   path('activate/<uidb64>/<token>/', Activate, name='activate'),
 
   path('', Home, name='Home'),
+  path('product/<str:pk>/', Products, name='Product'),
 
   path('about/', Aboutus, name='About'),
   path('contact/', ContactPage, name='Contact'),

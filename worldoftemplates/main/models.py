@@ -13,6 +13,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.username if self.username else "Unnamed Customer"
 
+# Tag Model
+class Tag(models.Model):
+    tag_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.tag_name
+
 # Product Model
 class Product(models.Model):
     product_name = models.CharField(max_length=200, null=True, blank=True)
@@ -20,8 +27,8 @@ class Product(models.Model):
     file = models.FileField(upload_to="product_files/", null=True, blank=True)
     img = models.ImageField(upload_to='product_files/preview', null=True, blank=True)
     office_created = models.BigIntegerField(null=True, blank=True)
-    morph = models.BigIntegerField(null=True, blank=True)
-    product_type = models.BigIntegerField(null=True, blank=True)
+    morph = models.BooleanField(null=True, blank=True)
+    product_type = models.ManyToManyField(Tag)
     size = models.BigIntegerField(null=True, blank=True)
     cost = models.BigIntegerField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -38,9 +45,3 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.id} by {self.customer.username}"
 
-# Tag Model
-class Tag(models.Model):
-    tag_name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        return self.tag_name
