@@ -14,7 +14,7 @@ def customer_profile(sender, instance, created, **kwargs):
       first_name = instance.first_name,
       last_name = instance.last_name,
       email = instance.email,
-      password = instance.password1
+      
     )
 
 post_save.connect(customer_profile, sender=User)
