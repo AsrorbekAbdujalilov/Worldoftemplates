@@ -12,6 +12,7 @@ urlpatterns = [
   path('', Home, name='Home'),
   path('product/<str:pk>/', Products, name='Product'),
 
+  path('profile/', Profile, name='profile'),
   path('about/', Aboutus, name='About'),
   path('contact/', ContactPage, name='Contact'),
 

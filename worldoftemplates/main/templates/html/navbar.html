@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Static CSS file -->
-    <link rel="stylesheet" href="{% static 'css/navbarr.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 
 </head>
 <body>
@@ -33,15 +33,15 @@
             </a>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'Logout' %}" class="login">
-                    Logout
-                </a>
-                <a href="{% url 'account' %}" class="home">Profile</a> <!-- Profile link -->
+
             {% else %}
                 <a href="{% url 'Login' %}" class="login">
                     Login
                 </a>
             {% endif %}
+            <a href="{% url 'profile' %}" class="home">
+                Profile
+            </a> <!-- Profile link -->
 
             <a href="{% url 'Contact' %}" class="register">
                 Contact

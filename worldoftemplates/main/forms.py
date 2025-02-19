@@ -6,6 +6,12 @@ from django import forms
 
 from .models import *
 
+class ProfileInput(ModelForm):
+  class Meta:
+    model = Customer
+    fields = '__all__'
+    exclude = ['user', 'email']
+
 class CreateUserForm(UserCreationForm):
   class Meta:
     model = User

@@ -1,0 +1,47 @@
+{% extends 'html/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static '/css/profile.css' %}">
+    <style>
+.placeholder-image {
+    background: url("{% static '/images/image.jpg' %}") no-repeat center/cover;
+    height: 220px;
+    width: 100%;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    filter: blur(0px);
+}
+    </style>
+
+    <div class="upper-info">
+        <div class="placeholder-image"></div>
+        <button class="logout-btn"><a href="{% url 'Logout' %}">Log Out</a></button>
+        <div class="profile-pic-container" id="profileUpload">
+            <img src="{{request.user.customer.image.url}}" alt="Profile Picture" class="profile-pic" id="profilePic">
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        <div class="upper-info-text">
+            <h2 id="fullName">Full Name</h2>
+            <p id="userName">Username</p>
+        </div>
+    </div>
+
+    <div class="info-container">
+        <h1>Edit Profile</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form">
+                {{form.as_p}}
+            </div>
+
+            
+            <div class="button-group">
+                <button type="submit" class="save-btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

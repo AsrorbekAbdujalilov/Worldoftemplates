@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import *
+import os
 
 # Customer Model
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     username = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True)
     first_name = models.CharField(max_length=200, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(null=True, unique=True, blank=True)
+    image = models.ImageField(default='profile/profile_pic.png',upload_to='profile/',null=True, blank=True)
 
     def __str__(self):
         return self.username if self.username else "Unnamed Customer"

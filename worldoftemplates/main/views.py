@@ -114,6 +114,18 @@ def Products(request, pk):
   context={'presentation':presentation, 'presentations':presentations}
   return render(request, 'html/product.html', context)
 
+def Profile(request):
+  customer = request.user.customer
+  form = ProfileInput(instance=customer)
+
+  if request.method == 'POST':
+    form = ProfileInput(request.POST, request.FILES, instance=customer)
+    if form.is_valid():
+      form.save()
+  
+  context = {'form':form}
+  return render(request, 'html/profile.html', context)
+
 @login_required(login_url='Login')
 def Aboutus(request):
   context = {}

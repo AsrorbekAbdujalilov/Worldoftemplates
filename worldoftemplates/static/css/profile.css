@@ -1,8 +1,13 @@
 body {
     font-family: Arial, sans-serif;
     background: #284b635b;
-    margin: 0;
-    padding: 0;
+    margin: 40px;
+}
+
+a{
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
 }
 
 h1 {
@@ -18,28 +23,12 @@ h1 {
     margin-top: 0;
 }
 
-.cover-photo {
-    background: url('cover-photo.jpg') no-repeat center/cover;
-    height: 600px; /* Adjusted height for better layout */
-    position: relative;
-}
-
-.placeholder-image {
-    background: url('image.jpg') no-repeat center/cover;
-    height: 220px;
-    width: 100%;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    filter: blur(0px);
-}
-
 .logout-btn {
     position: absolute;
     top: 10px;
     right: 10px;
     padding: 20px 40px;
-    background: #ff4d4d;
+    background: linear-gradient(to right, #001058, #765dff);
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,16 +39,14 @@ h1 {
 }
 
 .logout-btn:hover {
-    background: #cc0000;
+    background: linear-gradient(to right, #002fff, #765dff);
 }
 
-.cooldot {
-    color: #cc0000;
-}
 
 /* Upper Info - Profile Section */
 .upper-info {
     display: flex;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     align-items: center;
     justify-content: flex-start; /* Aligns everything to the left */
     padding-left: 120px;
@@ -129,26 +116,19 @@ h1 {
 }
 
 form input {
-    
-    transition-property: box-shadow;
-    transition-timing-function: cubic-bezier(.4,0,.2,1);
-    transition-duration: .15s;
+    transition: box-shadow 0.15s cubic-bezier(.4,0,.2,1);
     width: 100%;
     height: 30px;
-    border-radius: 40%;
-    border-radius: .5rem;
-    border-width: 1px;
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+    border-radius: .5rem;  /* Keep only one value */
+    border: 3px solid #001058;  /* Correct border */
     padding: 10px .75rem;
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 500;
+    color: rgb(91, 100, 121);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.25rem;
-    --tw-text-opacity: 1;
-    color: rgb(91 100 121 / var(--tw-text-opacity, 1));
 }
+
 
 form input:focus {
     border-color: #2193b0;
@@ -171,7 +151,7 @@ button {
     transition: background 0.3s;
 }
 .save-btn {
-    background: linear-gradient(to right, #ff0000, #ff4d4d);
+    background: linear-gradient(45deg, #023047,#219ebc);
     border-radius: 35px;
     width: 180px;
     height: 60px;
@@ -231,4 +211,9 @@ label {
     .info-container {
         width: 80%;
     }
+}
+
+.form{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
 }
