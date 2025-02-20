@@ -17,9 +17,6 @@ from .forms import *
 from .tokens import Tokenis
 from .decorators import *
 
-from pptx import Presentation
-from PIL import Image
-import os
 
 
 
