@@ -105,7 +105,6 @@ def Home(request):
   return render(request, 'html/home.html', context)
 
 def Products(request, pk):
-  presentations = Product.objects.filter(product_type='Animation')
   presentation = Product.objects.get(id=pk)
 
   context={'presentation':presentation, 'presentations':presentations}
