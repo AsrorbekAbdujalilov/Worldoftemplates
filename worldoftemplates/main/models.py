@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import *
 import os
+from django.db import models
+from django.conf import settings
+from django.core.files.storage import default_storage
+from pptx import Presentation
+from PIL import Image
+from pdf2image import convert_from_path
 
 # Customer Model
 class Customer(models.Model):
@@ -26,7 +32,6 @@ class Product(models.Model):
     product_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to="product_files/", null=True, blank=True)
-    img = models.ImageField(upload_to='product_files/preview', null=True, blank=True)
     office_created = models.BigIntegerField(null=True, blank=True)
     morph = models.BooleanField(null=True, blank=True)
     product_type = models.ManyToManyField(Tag)

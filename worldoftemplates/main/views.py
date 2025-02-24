@@ -18,8 +18,6 @@ from .tokens import Tokenis
 from .decorators import *
 
 
-
-
 def Activate(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -105,10 +103,18 @@ def Home(request):
   return render(request, 'html/home.html', context)
 
 def Products(request, pk):
-  presentation = Product.objects.get(id=pk)
+    from .extract import ppt_to_images
+    product = Product.objects.get(id=pk)
+    ppt_file = os.path.join(settings.MEDIA_ROOT, product.file.path)  # Ensure correct PPTX path
+    output_dir = os.path.join(settings.MEDIA_ROOT, f"slides/{product.id}")
+    
+    slides_list = ppt_to_images(ppt_file, output_dir)
 
-  context={'presentation':presentation, 'presentations':presentations}
-  return render(request, 'html/product.html', context)
+    # Convert file paths into accessible media URLs
+    slides_urls = [os.path.join(settings.MEDIA_URL, slide) for slide in slides_list]
+
+    context = {'product': product, "slides": slides_urls}
+    return render(request, 'html/product.html', context)
 
 def Profile(request):
   customer = request.user.customer
