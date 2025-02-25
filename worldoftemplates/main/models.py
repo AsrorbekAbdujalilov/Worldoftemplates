@@ -2,11 +2,6 @@ from django.db import models
 from django.contrib.auth.models import *
 import os
 from django.db import models
-from django.conf import settings
-from django.core.files.storage import default_storage
-from pptx import Presentation
-from PIL import Image
-from pdf2image import convert_from_path
 
 # Customer Model
 class Customer(models.Model):
