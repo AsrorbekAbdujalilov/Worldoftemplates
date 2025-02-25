@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from .tokens import Tokenis
 from .decorators import *
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
 
 
 def Activate(request, uidb64, token):
@@ -115,6 +117,14 @@ def Products(request, pk):
 
     context = {'product': product, "slides": slides_urls}
     return render(request, 'html/product.html', context)
+
+def download_file(request, filename):
+    product = get_object_or_404(Product, product_name=filename)
+    file_path = product.file.path
+    response = FileResponse(open(file_path, 'rb'))
+    response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'  # Correct MIME type for PPTX
+    response['Content-Disposition'] = f'attachment; filename="{product.product_name}.pptx"'
+    return response
 
 def Profile(request):
   customer = request.user.customer
