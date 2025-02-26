@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Static CSS file -->
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
 
 </head>
 <body>
@@ -25,28 +25,28 @@
             </p> 
         </div>
         <div class="right-side">
-            <a href="{% url 'Home' %}" class="home">
+            <a href="{% url 'Home' %}" class="link">
                 Home
             </a>
-            <a href="" class="product-type">
+            <a href="" class="link">
                 Product type
             </a>
 
             {% if user.is_authenticated %}
 
             {% else %}
-                <a href="{% url 'Login' %}" class="login">
+                <a href="{% url 'Login' %}" class="link">
                     Login
                 </a>
             {% endif %}
-            <a href="{% url 'profile' %}" class="home">
+            <a href="{% url 'profile' %}" class="link">
                 Profile
             </a> <!-- Profile link -->
 
-            <a href="{% url 'Contact' %}" class="register">
+            <a href="{% url 'Contact' %}" class="link">
                 Contact
             </a>
-            <a href="{% url 'About' %}" class="about-us">
+            <a href="{% url 'About' %}" class="link">
                 About us
             </a>
         </div>

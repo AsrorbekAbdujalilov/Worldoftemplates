@@ -47,9 +47,19 @@
       <!--  -->
       <!-- owl stylesheets -->
       <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext" rel="stylesheet">
-      <link rel="stylesheet" href="css/owl.carousel.min.css">
-      <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="{% static 'css/home/owl.carousel.min.css' %}">
+      <link rel="stylesoeet" href="{% static 'css/home/owl.theme.default.min.css' %}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
+      <style>
+         body{
+            padding-top: 70px;
+            background-image: url("{% static 'images/home/banner-bg.png' %}");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+      </style>
    </head>
    <body>
       <!-- banner bg main start -->
@@ -62,7 +72,7 @@
             <div class="container">
                <div class="row">
                   <div class="col-sm-12">
-                     <div class="logo"><a href="index.html"><img src="image/worldoftemplates.png" alt="worldoftemplates"></a></div>
+                     <div class="logo"><a href="index.html"><img src="" alt="worldoftemplates"></a></div>
                   </div>
                </div>
             </div>
