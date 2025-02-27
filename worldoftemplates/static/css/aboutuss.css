@@ -10,6 +10,7 @@
         font-size: 16px; /* Smaller font size */
         line-height: 1.5;
         margin: 5px 0;
+        color: white;
       }
 
       /* Container for individual entries */
@@ -60,13 +61,12 @@
       .name {
         font-size: 20px; /* Smaller font size */
         font-weight: bold;
-        color: black;
+        color: white;
         margin: 5px 0;
         transition: color 0.3s ease;
       }
 
       .name:hover {
-        color: #007BFF;
         cursor: pointer;
         font-style: italic;
       }
