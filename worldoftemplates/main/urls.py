@@ -11,6 +11,7 @@ urlpatterns = [
 
   path('', Home, name='Home'),
   path('product/<str:pk>/', Products, name='Product'),
+  path('download/<str:filename>/', download_file, name='download'),
 
   path('profile/', Profile, name='profile'),
   path('about/', Aboutus, name='About'),

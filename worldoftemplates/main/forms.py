@@ -11,6 +11,9 @@ class ProfileInput(ModelForm):
     model = Customer
     fields = '__all__'
     exclude = ['user', 'email']
+    widgets = {
+      'image': forms.ClearableFileInput(attrs={'class': 'custom-file-input'}),
+    }
 
 class CreateUserForm(UserCreationForm):
   class Meta:

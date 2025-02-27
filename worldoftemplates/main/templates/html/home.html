@@ -1,3 +1,9 @@
+{% extends 'html/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -9,7 +15,7 @@
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" href="nowbar.css">
+      
 
       <!-- basic -->
       <meta charset="utf-8">
@@ -19,20 +25,19 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>Eflyer</title>
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
       <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/home/bootstrap.min.css' %}">
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/home/style.css' %}">
       <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="{% static 'css/home/responsive.css' %}">
       <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <link rel="icon" href="{% static '/images/home/fevicon.png' %}" type="image/gif" />
       <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <link rel="stylesheet" href="{% static 'css/home/jquery.mCustomScrollbar.min.css' %}">
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <!-- fonts -->
@@ -42,9 +47,19 @@
       <!--  -->
       <!-- owl stylesheets -->
       <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext" rel="stylesheet">
-      <link rel="stylesheet" href="css/owl.carousel.min.css">
-      <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="{% static 'css/home/owl.carousel.min.css' %}">
+      <link rel="stylesoeet" href="{% static 'css/home/owl.theme.default.min.css' %}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
+      <style>
+         body{
+            padding-top: 70px;
+            background-image: url("{% static 'images/home/banner-bg.png' %}");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+      </style>
    </head>
    <body>
       <!-- banner bg main start -->
@@ -57,7 +72,7 @@
             <div class="container">
                <div class="row">
                   <div class="col-sm-12">
-                     <div class="logo"><a href="index.html"><img src="image/worldoftemplates.png" alt="worldoftemplates"></a></div>
+                     <div class="logo"><a href="index.html"><img src="" alt="worldoftemplates"></a></div>
                   </div>
                </div>
             </div>
@@ -75,13 +90,7 @@
                      <a href="jewellery.html">For Math</a>
                   </div>
                   <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
-                  <div class="dropdown">
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                     </div>
-                  </div>
+                  
                   <div class="main">
                      <!-- Another variation with a button -->
                      <div class="input-group">
@@ -93,20 +102,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="header_box">
-                     <div class="lang_box ">
-                        <a href="#" title="Language" class="nav-link" data-toggle="dropdown" aria-expanded="true">
-                        <img src="images/flag-uk.png" alt="flag" class="mr-2 " title="United Kingdom"> English <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu ">
-                           <a href="#" class="dropdown-item">
-                              <img src="images/Flag-Uzbekistan.png" class="mr-2" alt="flag" style="width: 16; height: 8px;">
-                              Uzbek
-                           </a>
-                        </div>
-                     </div>
-                     
-                  </div>
+                  
                </div>
             </div>
          </div>
@@ -119,22 +115,6 @@
                      <div class="carousel-item active">
                         <div class="row">
                            <div class="col-sm-12">
-                              <h1 class="banner_taital">There you can find <br>Your favourite templates</h1>
-                              
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-sm-12">
-                              <h1 class="banner_taital">only here you see <br> the Best ones to demonstrate</h1>
-                              
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-sm-12">
                               <h1 class="banner_taital">Get Start <br>with 
                                  <span style="color: #002fff;">
                                     WORLDOFTEMPLATES
@@ -144,13 +124,9 @@
                            </div>
                         </div>
                      </div>
+                     
                   </div>
-                  <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
-                  <i class="fa fa-angle-left"></i>
-                  </a>
-                  <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
-                  <i class="fa fa-angle-right"></i>
-                  </a>
+                  
                </div>
             </div>
          </div>
@@ -158,13 +134,6 @@
       </div>
       <!-- banner bg main end -->
       
-      
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
       <!-- sidebar -->
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
       <script src="js/custom.js"></script>
@@ -179,3 +148,5 @@
       </script>
    </body>
 </html>
+
+{% endblock %}
