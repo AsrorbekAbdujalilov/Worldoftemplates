@@ -122,7 +122,7 @@ def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
 
-login_required(login_url='Login')
+@login_required(login_url='Login')
 def Products(request, pk):
     from .extract import ppt_to_images
     product = Product.objects.get(id=pk)
@@ -146,7 +146,7 @@ def download_file(request, filename):
     response['Content-Disposition'] = f'attachment; filename="{product.product_name}.pptx"'
     return response
 
-login_required(login_url='Login')
+@login_required(login_url='Login')
 def Profile(request):
   customer = request.user.customer
   form = ProfileInput(instance=customer)
