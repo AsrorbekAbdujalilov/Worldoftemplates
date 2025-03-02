@@ -198,6 +198,11 @@
         </div>
       </div>
     </div>
+    <div>
+      {% for image_path in image_paths %}
+        <img src="/media/{{ image_path }}" alt="Slide" style="max-width: 100%;">
+      {% endfor %}
+    </div>
     <p class="relatedparagraph">Related presentations</p>
     <div class="related">
       <div class="related-presentations">
