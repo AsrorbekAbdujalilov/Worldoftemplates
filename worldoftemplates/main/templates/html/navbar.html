@@ -1,10 +1,13 @@
-{% load static %}
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>World of Templates</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Navbar</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Roboto:wght@700&display=swap" rel="stylesheet">
@@ -12,45 +15,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Static CSS file -->
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-
 </head>
 <body>
-    <div class="header">
-        <div class="left-side">
-            <img class="team-logo" src="images/cat-3.jfif">
+    <nav class="navbar">
+        <div class="brand">
+            <img src="logo.png" alt="World of Templates" class="logo">
             <p class="project-name">
-                World of Templates
-            </p> 
+              World of Templates
+            <p>
         </div>
-        <div class="right-side">
-            <a href="{% url 'Home' %}" class="link">
-                Home
-            </a>
-            <a href="" class="link">
-                Product type
-            </a>
-
-            {% if user.is_authenticated %}
-
-            {% else %}
-                <a href="{% url 'Login' %}" class="link">
-                    Login
-                </a>
-            {% endif %}
-            <a href="{% url 'profile' %}" class="link">
-                Profile
-            </a> <!-- Profile link -->
-
-            <a href="{% url 'Contact' %}" class="link">
-                Contact
-            </a>
-            <a href="{% url 'About' %}" class="link">
-                About us
-            </a>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#product">Product Type</a></li>
+            <li><a href="#login">Login</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#about">About Us</a></li>
+        </ul>
+    </nav>
 
+    <script>
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
