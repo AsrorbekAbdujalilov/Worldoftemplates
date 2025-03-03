@@ -3,6 +3,8 @@ from django.contrib.auth.models import *
 import os
 from django.db import models
 
+from .extract import convert_pptx_to_jpeg
+
 # Customer Model
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -24,25 +26,25 @@ class Tag(models.Model):
 
 # Product Model
 class Product(models.Model):
+    CATEGORIES = {
+        ('Office 2013','Office 2013'),
+        ('Office 2016','Office 2016'),
+        ('Office 2019','Office 2019'),
+        ('Office 2021','Office 2021'),
+    }
     product_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    file = models.FileField(upload_to="product_files/", null=True, blank=True)
-    office_created = models.BigIntegerField(null=True, blank=True)
+    file = models.FileField(upload_to='product_files', null=True, blank=True)
+    office_created = models.CharField(max_length=200, null=True, blank=True, choices=CATEGORIES)
     morph = models.BooleanField(null=True, blank=True)
-    product_type = models.ManyToManyField(Tag)
-    size = models.BigIntegerField(null=True, blank=True)
-    cost = models.BigIntegerField(null=True, blank=True)
+    product_type = models.ManyToManyField(Tag, blank=True)
+    size = models.FloatField(null=True, blank=True)
+    cost = models.FloatField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.product_name if self.product_name else "Unnamed Product"
-
-# Order Model
-class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Order {self.id} by {self.customer.username}"
-
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Save the file first
+        self.convert_pptx_to_jpeg()

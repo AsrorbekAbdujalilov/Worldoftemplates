@@ -122,19 +122,15 @@ def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
 
-login_required(login_url='Login')
+@login_required(login_url='Login')
 def Products(request, pk):
-    from .extract import ppt_to_images
     product = Product.objects.get(id=pk)
-    ppt_file = os.path.join(settings.MEDIA_ROOT, product.file.path)  # Ensure correct PPTX path
-    output_dir = os.path.join(settings.MEDIA_ROOT, f"slides/{product.id}")
-    
-    slides_list = ppt_to_images(ppt_file, output_dir)
+    image_paths = []
 
-    # Convert file paths into accessible media URLs
-    slides_urls = [os.path.join(settings.MEDIA_URL, slide) for slide in slides_list]
+    if product.converted:
+      image_paths = product.convert_pptx_to_jpeg()
 
-    context = {'product': product, "slides": slides_urls}
+    context = {'product': product, "image_paths": image_paths}
     return render(request, 'html/product.html', context)
 
 
@@ -146,7 +142,7 @@ def download_file(request, filename):
     response['Content-Disposition'] = f'attachment; filename="{product.product_name}.pptx"'
     return response
 
-login_required(login_url='Login')
+@login_required(login_url='Login')
 def Profile(request):
   customer = request.user.customer
   form = ProfileInput(instance=customer)
