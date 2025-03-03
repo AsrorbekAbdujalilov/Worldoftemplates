@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -16,11 +17,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from .tokens import Tokenis
 from .decorators import *
-
-from pptx import Presentation
-from PIL import Image
-import os
-
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
 
 
 def Activate(request, uidb64, token):
@@ -41,21 +39,28 @@ def Activate(request, uidb64, token):
 
 
 def Verification(request, user, to_email):
+    mail_subject = 'CONFIRM YOUR EMAIL'
+    
+    # Render HTML email template
+    message = render_to_string("html/massege.html", {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': Tokenis.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http',
+    })
 
-  mail_subject = 'CONFIRM YOUR EMAIL'
-  message = render_to_string("html/massege.html", {
-    'user': user.username,
-    'domain': get_current_site(request).domain,
-    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-    'token': Tokenis.make_token(user),
-    'protocol': 'https' if request.is_secure() else 'http',
-  })
-
-  email = EmailMessage(mail_subject, message, to=[to_email])
-  if email.send():
-    messages.success(request, f'Dear {user.username}, We sent a VERIFICATION CODE to your email {to_email}. Please check your inbox.')
-  else:
-    messages.error(request, f'Problem sending email to {to_email}, check if you type correctly')
+    # Use EmailMultiAlternatives for sending HTML emails
+    email = EmailMultiAlternatives(
+        subject=mail_subject,
+        body="Please verify your email by clicking the button below.",  # Plain text fallback
+        to=[to_email]
+    )
+    email.attach_alternative(message, "text/html")  # Attach HTML version
+    if email.send():
+        messages.success(request, f'Dear {user.username}, We sent a VERIFICATION CODE to your email {to_email}. Please check your inbox.')
+    else:
+        messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
 
 @authenticated
 def RegisterPage(request):
@@ -79,6 +84,16 @@ def RegisterPage(request):
 
 @authenticated
 def ActivationPage(request):
+  if request.method == 'POST':
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    user = User.objects.filter(username=username, email=email).first()  # Fix filter syntax and use .first()
+
+    if user:  # Ensure user exists
+        to_email = user.email  # Access email directly
+        Verification(request, user, to_email)  # Assuming Verification is defined elsewhere
+    else:
+        return render(request, 'html/verification.html', {'error': 'User not found'})
   context = {}
   return render(request, 'html/verification.html', context)
 
@@ -106,6 +121,39 @@ def Logout(request):
 def Home(request):
   context = {}
   return render(request, 'html/home.html', context)
+
+@login_required(login_url='Login')
+def Products(request, pk):
+    product = Product.objects.get(id=pk)
+    image_paths = []
+
+    if product.converted:
+      image_paths = product.convert_pptx_to_jpeg()
+
+    context = {'product': product, "image_paths": image_paths}
+    return render(request, 'html/product.html', context)
+
+
+def download_file(request, filename):
+    product = get_object_or_404(Product, product_name=filename)
+    file_path = product.file.path
+    response = FileResponse(open(file_path, 'rb'))
+    response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'  # Correct MIME type for PPTX
+    response['Content-Disposition'] = f'attachment; filename="{product.product_name}.pptx"'
+    return response
+
+@login_required(login_url='Login')
+def Profile(request):
+  customer = request.user.customer
+  form = ProfileInput(instance=customer)
+
+  if request.method == 'POST':
+    form = ProfileInput(request.POST, request.FILES, instance=customer)
+    if form.is_valid():
+      form.save()
+  
+  context = {'form':form,'customer':customer}
+  return render(request, 'html/profile.html', context)
 
 @login_required(login_url='Login')
 def Aboutus(request):

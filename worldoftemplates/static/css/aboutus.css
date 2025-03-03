@@ -1,7 +1,7 @@
       /* General Styles */
       body {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        background-color: #f0f0f0;
+        background: #284b635b;
         margin-top: 80px;
         padding: 0;
       }
@@ -10,6 +10,7 @@
         font-size: 16px; /* Smaller font size */
         line-height: 1.5;
         margin: 5px 0;
+        color: white;
       }
 
       /* Container for individual entries */
@@ -42,10 +43,7 @@
         transition: transform 0.3s ease, filter 0.3s ease;
       }
 
-      .man-photo:hover {
-        transform: scale(1.1);
-        filter: brightness(1.2);
-      }
+    
 
       /* Information Styling */
       .informations {
@@ -60,16 +58,12 @@
       .name {
         font-size: 20px; /* Smaller font size */
         font-weight: bold;
-        color: black;
+        color: white;
         margin: 5px 0;
         transition: color 0.3s ease;
       }
 
-      .name:hover {
-        color: #007BFF;
-        cursor: pointer;
-        font-style: italic;
-      }
+      
 
       /* Colorful Background Effects */
       .odd {
