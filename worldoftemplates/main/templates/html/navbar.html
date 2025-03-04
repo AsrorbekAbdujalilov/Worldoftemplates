@@ -1,25 +1,16 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collapsible Navbar</title>
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="thesidebar">
         <div class="brand">
-            <img src="logo.png" alt="World of Templates" class="logo">
+            <img src="logo.png" alt="World of Templates" class="logo-image">
             <p class="project-name">
               World of Templates
             <p>
@@ -30,11 +21,15 @@
             <span></span>
         </div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#product">Product Type</a></li>
-            <li><a href="#login">Login</a></li>
-            <li><a href="#register">Register</a></li>
-            <li><a href="#about">About Us</a></li>
+            <li><a href="{% url 'Home'%}">Home</a></li>
+            <li><a href="">Product Type</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+                <li><a href="{% url 'Login' %}">Login</a></li>
+            {% endif %}
+            <li><a href="{% url 'Contact' %}">Contact</a></li>
+            <li><a href="{% url 'About' %}">About Us</a></li>
         </ul>
     </nav>
 
