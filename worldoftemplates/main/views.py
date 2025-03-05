@@ -124,17 +124,22 @@ def Home(request):
 @login_required(login_url='Login')
 def Products(request, pk):
     product = get_object_or_404(Product, id=pk)
-    slide_urls = []  # List to store paths for all slides (up to 10)
-
+    slide_urls = []
+    
     if product.file:
-        # Get all slide images (up to 10)
-        slide_urls = product.get_slide_urls()
-        logger.info(f"Slide URLs for Product ID {pk}: {slide_urls}")  # Debug log
+        # Get the folder where images are stored
+        pptx_folder = os.path.dirname(product.file.name)
+        slides_folder = os.path.join(settings.MEDIA_URL, pptx_folder)
 
-    context = {
-        'product': product,
-        "slide_urls": slide_urls  # Use slide_urls for thumbnails
-    }
+        # Dynamically check how many slides exist
+        for i in range(1, 11):  # Maximum 10 slides
+            image_path = os.path.join(settings.MEDIA_ROOT, pptx_folder, f"slide{i}.jpg")
+            if os.path.exists(image_path):
+                slide_urls.append(f"{slides_folder}/slide{i}.jpg")
+            else:
+                break  # Stop when no more slides are found
+
+    context = {'product': product, 'slide_urls': slide_urls}
     return render(request, 'html/product.html', context)
 
 def download_file(request, filename):

@@ -5,14 +5,14 @@
 <link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
 
 <div class="total">
-  <div class="first-section">Greenery-Palette Pitch Deck</div>
+  <div class="first-section">{{product.product_name}}</div>
   <div class="second-section">
     <div class="second-overview">
       <!-- Main preview image: uses first slide or product file URL as fallback -->
-      {% if slide_urls and slide_urls|length >= 1 %}
+      {% if product.file.path and product.file.path|length >= 1 %}
         <img class="presentation-photo" src="{{ slide_urls.0 }}" alt="First Slide Preview" id="mainPreview">
       {% else %}
-        <img class="presentation-photo" src="{{ product.get_file_url }}" alt="Presentation Photo" id="mainPreview">
+        <img class="presentation-photo" src="{{ product.file.slide_url }}" alt="Presentation Photo" id="mainPreview">
       {% endif %}
       <div class="buttons-presentation">
         <button class="like-button">Save</button>

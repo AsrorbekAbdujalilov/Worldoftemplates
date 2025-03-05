@@ -1,14 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import *
 import os
-import logging
+import uuid
 import subprocess
-import fitz  # PyMuPDF
-from django.db import models    
+from django.shortcuts import render
 from django.conf import settings
-
-# Configure logging
-logger = logging.getLogger(__name__)
+import pymupdf as fitz  # PyMuPDF
+from pptx import Presentation
+from PIL import Image
 
 # Path to LibreOffice executable (adjust if necessary)
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
@@ -33,17 +32,16 @@ class Tag(models.Model):
         return self.tag_name
 
 
-# Product Model
 class Product(models.Model):
     CATEGORIES = {
-        ('Office 2013','Office 2013'),
-        ('Office 2016','Office 2016'),
-        ('Office 2019','Office 2019'),
-        ('Office 2021','Office 2021'),
+        ('Office 2013', 'Office 2013'),
+        ('Office 2016', 'Office 2016'),
+        ('Office 2019', 'Office 2019'),
+        ('Office 2021', 'Office 2021'),
     }
     product_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    file = models.FileField(upload_to='product_files', null=True, blank=True)
+    file = models.FileField(upload_to='uploads' ,null=True, blank=True)
     office_created = models.CharField(max_length=200, null=True, blank=True, choices=CATEGORIES)
     morph = models.BooleanField(null=True, blank=True)
     product_type = models.ManyToManyField(Tag, blank=True)
@@ -53,83 +51,59 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name if self.product_name else "Unnamed Product"
-    
+
     def save(self, *args, **kwargs):
-        """
-        Override save method to process PPTX file and extract full slide images.
-        """
-        is_new = self.pk is None
-        super().save(*args, **kwargs)  # Save to get an ID
-        if self.file and (is_new or 'file' in kwargs.get('update_fields', [])):
-            logger.info(f"Processing PPTX for Product ID: {self.id}")
+        is_new = self.pk is None  # Check if this is a new file
+        super().save(*args, **kwargs)  # Save first to get the file path    
+
+        if is_new and self.file:
+            unique_id = str(uuid.uuid4())  # Generate a unique folder ID
+            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', unique_id)
+            os.makedirs(upload_dir, exist_ok=True)  # ✅ Create the folder first    
+
+            pptx_path = os.path.join(upload_dir, os.path.basename(self.file.name))  
+            # Move file to UUID folder 
+            with open(pptx_path, 'wb+') as f:
+                for chunk in self.file.chunks():
+                    f.write(chunk)
+
+            for ext in ('.pptx', '.pptm', '.ppt'):
+                if pptx_path.lower().endswith(ext):
+                    pdf_path = pptx_path[: -len(ext)] + '.pdf'
+                    break
+
+            # ✅ Convert PPTX to PDF using LibreOffice
+            convert_command = [
+                LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf:writer_pdf_Export", pptx_path, "--outdir", upload_dir
+            ]
+            subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            # ✅ Check if an extra PDF was created outside the folder
+            original_pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"  # Where LibreOffice might save it
+            pdf_path = os.path.join(upload_dir, os.path.basename(original_pdf_path))  # Correct location
+
+            # ✅ If the extra PDF exists outside, delete it
+            if original_pdf_path != pdf_path and os.path.exists(original_pdf_path):
+                os.remove(original_pdf_path)  #
+
+            doc = fitz.open(pdf_path)
+            image_paths = []
+            num_pages = min(10, len(doc))  # Limit to first 10 slides
+            for i in range(num_pages):
+                page = doc[i]
+                pix = page.get_pixmap()
+                image_path = os.path.join(upload_dir, f'slide{i+1}.jpg')
+                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                img.save(image_path, format="JPEG")  # Save as JPEG
+
+                image_paths.append(os.path.join('uploads', unique_id, f'slide{i+1}.png'))
+
+            doc.close()
+
+            # ✅ Update file path to the new UUID-based location
+            self.file.name = f'uploads/{unique_id}/{self.file.name}'
             try:
-                self._extract_full_slide_images()
-                logger.info(f"Successfully extracted full slide images for Product ID: {self.id}")
-            except Exception as e:
-                logger.error(f"Error processing PPTX for Product ID {self.id}: {str(e)}")
-                raise  # Re-raise to handle in UI or logs
-
-    def _extract_full_slide_images(self):
-        """
-        Convert PPTX to PDF and extract each slide as a PNG image.
-        """
-        # Define target folder: media/product_files/{product_id}/
-        target_folder = os.path.join(settings.MEDIA_ROOT, 'product_files', str(self.id))
-        os.makedirs(target_folder, exist_ok=True)
-
-        # Move PPTX to target folder
-        original_pptx_path = self.file.path
-        pptx_filename = os.path.basename(self.file.name)
-        new_pptx_path = os.path.join(target_folder, pptx_filename)
-
-        if original_pptx_path != new_pptx_path:
-            os.rename(original_pptx_path, new_pptx_path)
-            self.file.name = os.path.join('product_files', str(self.id), pptx_filename)
-
-        # Convert PPTX to PDF using LibreOffice
-        pdf_path = new_pptx_path.replace('.pptx', '.pdf')
-        convert_command = [
-            LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf", new_pptx_path, "--outdir", target_folder
-        ]
-        result = subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        if not os.path.exists(pdf_path):
-            logger.error(f"Failed to convert PPTX to PDF for Product ID: {self.id}. LibreOffice error: {result.stderr}")
-            raise FileNotFoundError("PDF conversion failed.")
-
-        # Convert all PDF pages to PNG images
-        doc = fitz.open(pdf_path)
-        num_pages = len(doc)  # Get the number of pages before processing
-        for i in range(num_pages):  # Process all slides
-            page = doc[i]
-            pix = page.get_pixmap(matrix=fitz.Matrix(300/72, 300/72))  # 300 DPI for quality
-            image_path = os.path.join(target_folder, f'slide{i+1}.png')
-            pix.save(image_path)
-
-        logger.info(f"Extracted {num_pages} slide images for Product ID: {self.id}")  # Log before closing
-        doc.close()  # Close the document here
-
-        # Clean up PDF file
-        try:
-            os.remove(pdf_path)
-        except PermissionError:
-            logger.warning(f"Could not delete PDF at {pdf_path} due to permission error")
-
-        # Update file field to reflect new PPTX location
-        super().save(update_fields=['file'])
-    def get_slide_urls(self):
-        """
-        Return a list of URLs for all slide images.
-        """
-        if not self.id:
-            return []
-        target_folder = os.path.join('product_files', str(self.id))
-        media_path = os.path.join(settings.MEDIA_ROOT, target_folder)
-        if not os.path.exists(media_path):
-            return []
-        slide_files = sorted([f for f in os.listdir(media_path) if f.startswith('slide') and f.endswith('.png')])
-        return [f"{settings.MEDIA_URL}{target_folder}/{f}" for f in slide_files]
-    def get_file_url(self):
-        """
-        Return the URL of the original PPTX file.
-        """
-        return f"{settings.MEDIA_URL}{self.file.name}" if self.file else ''
+                os.remove(pdf_path)
+            except PermissionError:
+                pass  # If file is locked, don't crash
+            super().save(update_fields=['file'])  # Save the new file path in the database
