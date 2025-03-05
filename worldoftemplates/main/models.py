@@ -98,14 +98,15 @@ class Product(models.Model):
 
         # Convert all PDF pages to PNG images
         doc = fitz.open(pdf_path)
-        for i in range(len(doc)):  # Process all slides
+        num_pages = len(doc)  # Get the number of pages before processing
+        for i in range(num_pages):  # Process all slides
             page = doc[i]
             pix = page.get_pixmap(matrix=fitz.Matrix(300/72, 300/72))  # 300 DPI for quality
             image_path = os.path.join(target_folder, f'slide{i+1}.png')
             pix.save(image_path)
 
-        doc.close()
-        logger.info(f"Extracted {len(doc)} slide images for Product ID: {self.id}")
+        logger.info(f"Extracted {num_pages} slide images for Product ID: {self.id}")  # Log before closing
+        doc.close()  # Close the document here
 
         # Clean up PDF file
         try:
@@ -115,7 +116,6 @@ class Product(models.Model):
 
         # Update file field to reflect new PPTX location
         super().save(update_fields=['file'])
-
     def get_slide_urls(self):
         """
         Return a list of URLs for all slide images.
@@ -127,10 +127,9 @@ class Product(models.Model):
         if not os.path.exists(media_path):
             return []
         slide_files = sorted([f for f in os.listdir(media_path) if f.startswith('slide') and f.endswith('.png')])
-        return [os.path.join(settings.MEDIA_URL, target_folder, f).replace('\\', '/') for f in slide_files]
-
+        return [f"{settings.MEDIA_URL}{target_folder}/{f}" for f in slide_files]
     def get_file_url(self):
         """
         Return the URL of the original PPTX file.
         """
-        return os.path.join(settings.MEDIA_URL, self.file.name).replace('\\', '/') if self.file else ''
+        return f"{settings.MEDIA_URL}{self.file.name}" if self.file else ''

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshoot</title>
+    <style>
+      /* Background Styling */
+      body {
+        background-image: url('Photos/Troubleshootbackground.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+      }
+
+      /* Centered Content Container */
+      .center {
+        display: flex;
+        flex-direction: column;
+        padding: 30px 50px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      /* Troubleshoot Title */
+      .troubleshootpara {
+        font-size: 40px;
+        font-weight: bold;
+        color: #3366cc;
+        margin-bottom: 20px;
+        animation: fadeIn 1s ease-out;
+      }
+
+      /* Input Placeholder Styling */
+      .placeholder {
+        height: 40px;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        margin: 10px 0 20px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .placeholder:focus {
+        border-color: #3366cc;
+        box-shadow: 0 0 5px rgba(51, 102, 204, 0.5);
+      }
+
+      /* Login Text Styling */
+      .login {
+        font-size: 16px;
+        color: #555;
+        margin-top: 10px;
+      }
+
+      .log {
+        color: #3366cc;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+
+      .log:hover {
+        color: #003366;
+      }
+
+      /* Send Button Styling */
+      .send-button {
+        padding: 15px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background-color: #3366cc;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .send-button:hover {
+        background-color: #254e92;
+        transform: scale(1.05);
+      }
+
+      /* Animation for fade-in effect */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <p class="troubleshootpara">
+        Troubleshoot
+      </p>
+      <input class="placeholder" type="text" placeholder="Enter your username or email">
+      <p class="login">
+        Have an account? <span class="log">Log in</span>
+      </p>
+      <button class="send-button">
+        Send link
+      </button>
+    </div>
+  </body>
+</html>

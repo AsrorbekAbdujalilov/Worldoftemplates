@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/product.css' %}">
+<link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
 
 <div class="total">
   <div class="first-section">Greenery-Palette Pitch Deck</div>
@@ -10,9 +10,9 @@
     <div class="second-overview">
       <!-- Main preview image: uses first slide or product file URL as fallback -->
       {% if slide_urls and slide_urls|length >= 1 %}
-        <img class="presentation-photo" src="{{ MEDIA_URL }}{{ slide_urls.0 }}" alt="First Slide Preview" style="max-width: 100%;">
+        <img class="presentation-photo" src="{{ slide_urls.0 }}" alt="First Slide Preview" id="mainPreview">
       {% else %}
-        <img class="presentation-photo" src="{{ product.get_file_url }}" alt="Presentation Photo" style="max-width: 100%;">
+        <img class="presentation-photo" src="{{ product.get_file_url }}" alt="Presentation Photo" id="mainPreview">
       {% endif %}
       <div class="buttons-presentation">
         <button class="like-button">Save</button>
@@ -23,24 +23,25 @@
       <a href="{% url 'download' product.product_name %}" target="_blank">
         <button class="download-button">Download this template</button>
       </a>
-      <p class="name-presentation">{{ product.product_name }}</p>
+      <p class="name-presentation">{{ product.product_name|default:"Unnamed Product" }}</p>
       <p class="info-presentation">
-        Wrap your business proposals or project presentations in the tranquil hues of nature with this pitch deck template. This creative template, designed for use in Google Slides and PowerPoint, allows your data and information to flourish amidst a delightful green backdrop. The template comes with different types of innovative infographics and charts that cater to your presentation needs. The greenery-palette purposefully mirrors eco-friendly practices underlining your commitment towards environmental sustainability. Make your ideas stand out with this visual stunner. Connect with your audience in a whole new way!
+        {{ product.description|default:"No description available." }}
       </p>
     </div>
   </div>
 </div>
 
 <!-- Slide thumbnails section -->
+<!-- Slide thumbnails section -->
 <div class="slide-thumbnails">
   {% if slide_urls %}
-    {% for slide_url in slide_urls %}
-      <img src="{{ MEDIA_URL }}{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" style="max-width: 150px; margin: 5px;">
+    {% for slide_url in slide_urls|slice:":10" %}
+      <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
     {% empty %}
-      <p>No slides available. Debug: slide_urls = {{ slide_urls }}</p>
+      <p>No slides available.</p>
     {% endfor %}
   {% else %}
-    <p>No slides available. Debug: slide_urls = {{ slide_urls }}</p>
+    <p>No slides available.</p>
   {% endif %}
 </div>
 
@@ -54,4 +55,20 @@
     </div>
   {% endfor %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all thumbnails and the main preview
+    const thumbnails = document.querySelectorAll('.slide-thumbnail');
+    const mainPreview = document.getElementById('mainPreview');
+
+    // Add click event to each thumbnail
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const newSlideUrl = this.getAttribute('data-slide-url');
+        mainPreview.src = newSlideUrl;
+      });
+    });
+  });
+</script>
 {% endblock %}
