@@ -9,47 +9,61 @@ from PIL import Image
 
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
-def convert_pptx_to_jpeg(self):
-    if not self.file:
-        return None  # No file uploaded
+def convert_pptx_to_jpeg(request):
+    if request.method == 'POST' and 'pptx_file' in request.FILES:
+        pptx_file = request.FILES['pptx_file']
 
-    # Generate unique folder for this upload
-    unique_id = str(uuid.uuid4())
-    upload_dir = os.path.join(settings.MEDIA_ROOT, 'product_files', unique_id)
-    os.makedirs(upload_dir, exist_ok=True)
+        # ✅ Generate Unique ID for This Upload
+        unique_id = str(uuid.uuid4())
+        upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', unique_id)
+        os.makedirs(upload_dir, exist_ok=True)
 
-    # Get the PPTX file path
-    pptx_path = self.file.path  # Use the actual saved file path
-    pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"
+        # ✅ Save the PPTX file permanently in the same folder as images
+        pptx_path = os.path.join(upload_dir, pptx_file.name)
+        with open(pptx_path, 'wb+') as f:
+            for chunk in pptx_file.chunks():
+                f.write(chunk)
 
-    # Convert PPTX to PDF using LibreOffice
-    convert_command = [
-        LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf:writer_pdf_Export",
-        pptx_path, "--outdir", upload_dir
-    ]
-    subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # ✅ Convert PPTX to PDF using LibreOffice
+        pdf_path = pptx_path.replace('.pptx', '.pdf')
+        convert_command = [
+            LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf", pptx_path, "--outdir", upload_dir
+        ]
+        subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    # Convert FIRST 10 PDF pages to images using PyMuPDF
-    doc = fitz.open(pdf_path)
-    image_paths = []
-    num_pages = min(10, len(doc))  # Process up to 10 slides
+        if not os.path.exists(pdf_path):
+            return render(request, 'pptx_uploader/upload.html', {'error': 'Failed to convert PPTX to PDF.'})
 
-    for i in range(num_pages):  
-        page = doc[i]
-        pix = page.get_pixmap()
-        image_path = os.path.join(upload_dir, f'slide{i+1}.png')
-        pix.save(image_path)  # Saves the image directly
+        # ✅ Convert FIRST 10 PDF pages to images using PyMuPDF
+        doc = fitz.open(pdf_path)
+        image_paths = []
+        num_pages = min(10, len(doc))  # Process at most 10 slides or total available
 
-        # Save the relative path for Django
-        media_relative_path = f'product_files/{unique_id}/slide{i+1}.png'
-        image_paths.append(media_relative_path)
+        for i in range(num_pages):  
+            page = doc[i]
+            pix = page.get_pixmap()
+            image_path = os.path.join(upload_dir, f'slide{i+1}.png')
 
-    doc.close()  # Close PDF before deletion
+            # ✅ Convert Pixmap to PIL Image and Save as PNG
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            img.save(image_path, format="PNG")
 
-        # Remove only the PDF file
-    try:
-        os.remove(pdf_path)
-    except PermissionError:
-        pass  # If file is locked, skip deletion
+            image_paths.append(os.path.join('uploads', unique_id, f'slide{i+1}.png'))
 
-    return image_paths  # Return the paths of generated images
+        doc.close()  # Explicitly close the PDF before deleting
+
+        # ✅ Remove only the PDF (keep PPTX & images)
+        try:
+            os.remove(pdf_path)
+        except PermissionError:
+            pass  # If file is locked, don't crash
+
+        # ✅ Pass PPTX file path for download
+        pptx_download_path = os.path.join('uploads', unique_id, pptx_file.name)
+
+        return render(request, 'pptx_uploader/result.html', {
+            'image_paths': image_paths,
+            'pptx_download': pptx_download_path
+        })
+
+    return render(request, 'pptx_uploader/upload.html')

@@ -149,6 +149,25 @@ body {
   background-color: #f0f0f0;
 }
 
+.slide-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.slide-thumbnail {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.slide-thumbnail:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+}
+
 @media (max-width: 768px) {
   .second-section {
     flex-direction: column;
