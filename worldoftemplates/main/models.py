@@ -101,7 +101,7 @@ class Product(models.Model):
             doc.close()
 
             # ✅ Update file path to the new UUID-based location
-            self.file.name = f'uploads/{unique_id}/{self.file.name}'
+            self.file.name = f'uploads/{unique_id}/{self.file.name.split('/')[-1]}'
             try:
                 os.remove(pdf_path)
             except PermissionError:

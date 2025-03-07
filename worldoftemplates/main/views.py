@@ -119,8 +119,20 @@ def Home(request):
     context = {}
     return render(request, 'html/home.html', context)
 
-# main/views.py (excerpt)
-# main/views.py (excerpt)
+def relatedProduct(request):
+    if request.method == "GET":
+        search_term = request.GET.get('search', '').strip()
+        relateds = Product.objects.filter(product_name__icontains=search_term)
+
+        for related in relateds:
+            if related.file:
+                pptx_path = related.file.url
+                image_folder = pptx_path.replace(f'{related.file.name}', '')
+                related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+
+        context = {'relateds': relateds}
+        return render(request, 'html/relatedProduct.html', context)
+
 @login_required(login_url='Login')
 def Products(request, pk):
     product = get_object_or_404(Product, id=pk)

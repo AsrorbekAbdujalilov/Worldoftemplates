@@ -11,6 +11,7 @@ urlpatterns = [
   path('activate/<uidb64>/<token>/', Activate, name='activate'),
 
   path('', Home, name='Home'),
+  path('related_products', relatedProduct, name='related'),
   path('product/<str:pk>/', Products, name='Product'),
   path('download/<str:filename>/', download_file, name='download'),
 

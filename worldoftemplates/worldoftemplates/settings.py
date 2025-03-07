@@ -126,10 +126,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Where collected static files go in production
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Where to look for static files during development
 ]
@@ -142,23 +144,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'abdujalilovasrorbek45@gmail.com'
 EMAIL_HOST_PASSWORD = 'btkt uksv ofij qzng'
 
-# settings.py
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# settings.py
-# settings.py
-# settings.py
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
-    },
-}

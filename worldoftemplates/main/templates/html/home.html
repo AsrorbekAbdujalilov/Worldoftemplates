@@ -93,13 +93,15 @@
                  
                   <div class="main">
                      <!-- Another variation with a button -->
-                     <div class="input-group">
+                     <div>
+                        <form action="{% url 'related' %}" method="GET" enctype="multipart/form-data" class="input-group">
                         <input type="text" class="form-control" placeholder="Search a template">
                         <div class="input-group-append">
                            <button class="btn btn-secondary" type="button" style="background-color: #002fff; border-color:#002fff ">
                            <i class="fa fa-search"></i>
                            </button>
                         </div>
+                        </form>
                      </div>
                   </div>
                   
