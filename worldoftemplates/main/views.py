@@ -121,17 +121,24 @@ def Home(request):
 
 def relatedProduct(request):
     if request.method == "GET":
-        search_term = request.GET.get('search', '').strip()
-        relateds = Product.objects.filter(product_name__icontains=search_term)
+        search_term = request.GET.get('search', '')
+
+        # Get related products
+        relateds = Product.objects.all()  # Adjust filter logic if necessary
+
+        if search_term:
+            relateds = relateds.filter(product_name__icontains=search_term)
 
         for related in relateds:
             if related.file:
-                pptx_path = related.file.url
-                image_folder = pptx_path.replace(f'{related.file.name}', '')
+                pptx_url = related.file.url
+                image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')
                 related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
 
         context = {'relateds': relateds}
         return render(request, 'html/relatedProduct.html', context)
+    else:
+        redirect('/')
 
 @login_required(login_url='Login')
 def Products(request, pk):
