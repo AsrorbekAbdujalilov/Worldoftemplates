@@ -1,0 +1,74 @@
+{% extends 'html/main.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
+
+<div class="total">
+  <div class="first-section">{{product.product_name}}</div>
+  <div class="second-section">
+    <div class="second-overview">
+      <!-- Main preview image: uses first slide or product file URL as fallback -->
+      {% if product.file.path and product.file.path|length >= 1 %}
+        <img class="presentation-photo" src="{{ slide_urls.0 }}" alt="First Slide Preview" id="mainPreview">
+      {% else %}
+        <img class="presentation-photo" src="{{ product.file.slide_url }}" alt="Presentation Photo" id="mainPreview">
+      {% endif %}
+      <div class="buttons-presentation">
+        <button class="like-button">Save</button>
+        <button class="like-button">Share</button>
+      </div>
+    </div>
+    <div class="second-notes">
+      <a href="{% url 'download' product.product_name %}" target="_blank">
+        <button class="download-button">Download this template</button>
+      </a>
+      <p class="name-presentation">{{ product.product_name|default:"Unnamed Product" }}</p>
+      <p class="info-presentation">
+        {{ product.description|default:"No description available." }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide thumbnails section -->
+<!-- Slide thumbnails section -->
+<div class="slide-thumbnails">
+  {% if slide_urls %}
+    {% for slide_url in slide_urls|slice:":10" %}
+      <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
+    {% empty %}
+      <p>No slides available.</p>
+    {% endfor %}
+  {% else %}
+    <p>No slides available.</p>
+  {% endif %}
+</div>
+
+<!-- Related presentations section -->
+<p class="relatedparagraph">Related presentations</p>
+<div class="related">
+  {% for i in "123456" %}
+    <div class="related-presentations">
+      <img class="related-photo" src="{% static 'Photos/related_'|add:i|add:'.webp' %}" alt="Related {{ i }}">
+      <button class="relatedp-format">16:9</button>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all thumbnails and the main preview
+    const thumbnails = document.querySelectorAll('.slide-thumbnail');
+    const mainPreview = document.getElementById('mainPreview');
+
+    // Add click event to each thumbnail
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const newSlideUrl = this.getAttribute('data-slide-url');
+        mainPreview.src = newSlideUrl;
+      });
+    });
+  });
+</script>
+{% endblock %}
