@@ -11,7 +11,8 @@ urlpatterns = [
   path('activate/<uidb64>/<token>/', Activate, name='activate'),
 
   path('', Home, name='Home'),
-  path('related_products', relatedProduct, name='related'),
+  path('products/<str:type>/', ProductType, name='typeproducts'),
+  path('related_products', searchrelatedProduct, name='related'),
   path('product/<str:pk>/', Products, name='Product'),
   path('download/<str:filename>/', download_file, name='download'),
 
@@ -20,6 +21,3 @@ urlpatterns = [
   path('contact/', ContactPage, name='Contact'),
 
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

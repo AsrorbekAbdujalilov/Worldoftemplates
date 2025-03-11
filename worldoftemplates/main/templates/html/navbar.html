@@ -13,7 +13,7 @@
             <img src="logo.png" alt="World of Templates" class="logo-image">
             <p class="project-name">
               World of Templates
-            <p>
+            </p>
         </div>
         <div class="hamburger">
             <span></span>
@@ -22,7 +22,14 @@
         </div>
         <ul class="nav-links">
             <li><a href="{% url 'Home'%}">Home</a></li>
-            <li><a href="">Product Type</a></li>
+            <li class="dropdown">
+                <a href="#">Product Type</a>
+                <ul class="dropdown-menu">
+                    {% for type in types %}
+                        <li><a href="{% url 'typeproducts' type.tag_name %}">{{type}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
@@ -36,6 +43,14 @@
     <script>
         document.querySelector('.hamburger').addEventListener('click', () => {
             document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        document.querySelector('.dropdown > a').addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdown = e.target.parentElement;
+                dropdown.classList.toggle('active');
+            }
         });
     </script>
 </body>
