@@ -48,10 +48,10 @@
 <!-- Related presentations section -->
 <p class="relatedparagraph">Related presentations</p>
 <div class="related">
-  {% for i in "123456" %}
+  {% for related in relateds %}
     <div class="related-presentations">
-      <img class="related-photo" src="{% static 'Photos/related_'|add:i|add:'.webp' %}" alt="Related {{ i }}">
-      <button class="relatedp-format">16:9</button>
+      <img class="related-photo" src="{% static 'Photos/related_'|add:i|add:'.webp' %}" alt="{{related.product_name}}">
+      <button class="relatedp-format">{{related.product_name}}</button>
     </div>
   {% endfor %}
 </div>

@@ -115,11 +115,23 @@ def Logout(request):
     logout(request)
     return redirect('Login')
 
+
 def Home(request):
-    context = {}
+    types = Tag.objects.all()
+
+    context = {'types':types}
     return render(request, 'html/home.html', context)
 
-def relatedProduct(request):
+@login_required(login_url='Login')
+def ProductType(request, type):
+    product_type = get_object_or_404(Tag, tag_name=type)
+    relateds = Product.objects.filter(product_type=product_type)
+
+    context = {'relateds':relateds}
+    return render(request, 'html/ProductType.html', context)
+
+@login_required(login_url='Login')
+def searchrelatedProduct(request):
     if request.method == "GET":
         search_term = request.GET.get('search', '')
 
@@ -143,6 +155,7 @@ def relatedProduct(request):
 @login_required(login_url='Login')
 def Products(request, pk):
     product = get_object_or_404(Product, id=pk)
+    relateds = Product.objects.filter(product_type__in=product.product_type.all())
     slide_urls = []
     
     if product.file:
@@ -158,7 +171,7 @@ def Products(request, pk):
             else:
                 break  # Stop when no more slides are found
 
-    context = {'product': product, 'slide_urls': slide_urls}
+    context = {'product': product, 'slide_urls': slide_urls, 'relateds':relateds}
     return render(request, 'html/product.html', context)
 
 def download_file(request, filename):
