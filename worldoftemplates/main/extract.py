@@ -3,9 +3,6 @@ import uuid
 import subprocess
 from django.shortcuts import render
 from django.conf import settings
-import pymupdf as fitz  # PyMuPDF
-from pptx import Presentation
-from PIL import Image
 
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
