@@ -44,6 +44,8 @@ class Product(models.Model):
     file = models.FileField(upload_to='uploads' ,null=True, blank=True)
     office_created = models.CharField(max_length=200, null=True, blank=True, choices=CATEGORIES)
     morph = models.BooleanField(null=True, blank=True)
+    premium = models.BooleanField(null=True, blank=True)
+    favorite = models.BooleanField(null=True, blank=True)
     product_type = models.ManyToManyField(Tag, blank=True)
     size = models.FloatField(null=True, blank=True)
     cost = models.FloatField(null=True, blank=True)
