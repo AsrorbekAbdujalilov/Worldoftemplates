@@ -16,9 +16,6 @@ from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 import os
 from .models import Product  # Import the Product model
-import logging
-
-logger = logging.getLogger(__name__)
 
 def Activate(request, uidb64, token):
     try:
@@ -119,15 +116,34 @@ def Logout(request):
 def Home(request):
     types = Tag.objects.all()
 
-    context = {'types':types}
+    tag_products = []
+
+    for typ in types:
+        products = Product.objects.filter(product_type=typ).order_by('-date_created')[:3]
+        tag_products.append({'typ': typ, 'products': products})
+
+        for product in products:
+            if product.file:
+                pptx_url = product.file.url
+                image_folder = pptx_url.replace(f'{product.file.name.split('/')[-1]}','')
+                product.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+
+    context = {'types':types, 'tag_products':tag_products}
     return render(request, 'html/home.html', context)
 
 @login_required(login_url='Login')
 def ProductType(request, type):
+    types = Tag.objects.all()
     product_type = get_object_or_404(Tag, tag_name=type)
     relateds = Product.objects.filter(product_type=product_type)
 
-    context = {'relateds':relateds}
+    for related in relateds:
+        if related.file:
+            pptx_url = related.file.url
+            image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')
+            related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+
+    context = {'relateds':relateds, 'types':types}
     return render(request, 'html/ProductType.html', context)
 
 @login_required(login_url='Login')
@@ -137,6 +153,7 @@ def searchrelatedProduct(request):
 
         # Get related products
         relateds = Product.objects.all()  # Adjust filter logic if necessary
+        types = Tag.objects.all()
 
         if search_term:
             relateds = relateds.filter(product_name__icontains=search_term)
@@ -147,7 +164,7 @@ def searchrelatedProduct(request):
                 image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')
                 related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
 
-        context = {'relateds': relateds}
+        context = {'relateds': relateds, 'types':types}
         return render(request, 'html/relatedProduct.html', context)
     else:
         redirect('/')
@@ -156,6 +173,7 @@ def searchrelatedProduct(request):
 def Products(request, pk):
     product = get_object_or_404(Product, id=pk)
     relateds = Product.objects.filter(product_type__in=product.product_type.all())
+    types = Tag.objects.all()
     slide_urls = []
     
     if product.file:
@@ -171,7 +189,7 @@ def Products(request, pk):
             else:
                 break  # Stop when no more slides are found
 
-    context = {'product': product, 'slide_urls': slide_urls, 'relateds':relateds}
+    context = {'product': product, 'slide_urls': slide_urls, 'relateds':relateds, 'types':types}
     return render(request, 'html/product.html', context)
 
 def download_file(request, filename):
@@ -185,6 +203,7 @@ def download_file(request, filename):
 @login_required(login_url='Login')
 def Profile(request):
     customer = request.user.customer
+    types = Tag.objects.all()
     form = ProfileInput(instance=customer)
 
     if request.method == 'POST':
@@ -192,15 +211,17 @@ def Profile(request):
         if form.is_valid():
             form.save()
     
-    context = {'form': form, 'customer': customer}
+    context = {'form': form, 'customer': customer, 'types':types}
     return render(request, 'html/profile.html', context)
 
 @login_required(login_url='Login')
 def Aboutus(request):
-    context = {}
+    types = Tag.objects.all()
+    context = {'types':types}
     return render(request, 'html/aboutus.html', context)
 
 @login_required(login_url='Login')
 def ContactPage(request):
-    context = {}
+    types = Tag.objects.all()
+    context = {'types':types}
     return render(request, 'html/contact.html', context)
