@@ -58,7 +58,6 @@
             background-size: 100%;
             background-repeat: no-repeat;
             background-position: center;
-            
          }
       </style>
    </head>
@@ -93,13 +92,15 @@
                  
                   <div class="main">
                      <!-- Another variation with a button -->
-                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search a template">
-                        <div class="input-group-append">
-                           <button class="btn btn-secondary" type="button" style="background-color: #002fff; border-color:#002fff ">
-                           <i class="fa fa-search"></i>
-                           </button>
-                        </div>
+                     <div>
+                        <form action="{% url 'related' %}" method="GET" class="input-group">
+                           <input type="text" name="search" class="form-control" placeholder="Search a template">
+                           <div class="input-group-append">
+                               <button class="btn btn-secondary" type="submit" style="background-color: #002fff; border-color:#00115a69">
+                                   <i class="fa fa-search"></i>
+                               </button>
+                           </div>
+                       </form>
                      </div>
                   </div>
                   
@@ -132,34 +133,17 @@
          </div>
          <!-- banner section end -->
       </div>
-      <p class="relatedparagraph">Related presentations</p>
-    <div class="related">
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 1.webp" alt="Related 1">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 2.webp" alt="Related 2">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 3.webp" alt="Related 3">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 4.webp" alt="Related 4">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 5.webp" alt="Related 5">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 6.webp" alt="Related 6">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <!-- banner bg main end -->
-      
+      {% for entry in tag_products %}
+         <p class="relatedparagraph">{{ entry.typ.tag_name }}</p> <!-- Use entry.tag for the tag's name -->
+         <div class="related">
+            {% for product in entry.products %}
+               <a class="related-presentations" href="{% url 'Product' product.id %}">
+                  <img class="related-photo" src="{{ product.image_preview }}" alt="Related {{ product.product_name }}">
+                  <button class="relatedp-format">{{ product.product_name }}</button>
+               </a>
+            {% endfor %}
+         </div>
+      {% endfor %}
       <!-- sidebar -->
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
       <script src="js/custom.js"></script>

@@ -1,56 +1,61 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>World of Templates</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Static CSS file -->
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
 </head>
 <body>
-    <div class="header">
-        <div class="left-side">
-            <img class="team-logo" src="images/cat-3.jfif">
+    <nav class="thesidebar">
+        <div class="brand">
+            <img src="logo.png" alt="World of Templates" class="logo-image">
             <p class="project-name">
-                World of Templates
-            </p> 
+              World of Templates
+            </p>
         </div>
-        <div class="right-side">
-            <a href="{% url 'Home' %}" class="link">
-                Home
-            </a>
-            <a href="" class="link">
-                Product type
-            </a>
-
-            {% if user.is_authenticated %}
-
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'Home'%}">Home</a></li>
+            {% if types and user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#">Templates</a>
+                    <ul class="dropdown-menu">
+                        {% for type in types %}
+                            <li><a href="{% url 'typeproducts' type.tag_name %}">{{type}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
             {% else %}
-                <a href="{% url 'Login' %}" class="link">
-                    Login
-                </a>
+                <li><a href="#">Templates</a></li>
             {% endif %}
-            <a href="{% url 'profile' %}" class="link">
-                Profile
-            </a> <!-- Profile link -->
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+                <li><a href="{% url 'Login' %}">Login</a></li>
+            {% endif %}
+            <li><a href="{% url 'Contact' %}">Contact</a></li>
+            <li><a href="{% url 'About' %}">About Us</a></li>
+        </ul>
+    </nav>
 
-            <a href="{% url 'Contact' %}" class="link">
-                Contact
-            </a>
-            <a href="{% url 'About' %}" class="link">
-                About us
-            </a>
-        </div>
-    </div>
+    <script>
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
 
+        document.querySelector('.dropdown > a').addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdown = e.target.parentElement;
+                dropdown.classList.toggle('active');
+            }
+        });
+    </script>
 </body>
 </html>

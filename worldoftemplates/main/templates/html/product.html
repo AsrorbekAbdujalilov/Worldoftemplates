@@ -2,68 +2,73 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentation</title>
-    <link rel="stylesheet" href="{% static '/css/product.css' %}">
-  </head>
-  <body>
-    <div class="total">
-      <div class="first-section">Greenery-Palette Pitch Deck</div>
-      <div class="second-section">
-        <div class="second-overview">
-          <img class="presentation-photo" src="" alt="Presentation Photo">
-          <div class="buttons-presentation">
-            <button class="like-button">Save</button>
-            <button class="like-button">Share</button>
-          </div>
-        </div>
-        <div class="second-notes">
-          <a href="{% url 'download' product.product_name %}" target="_blank"><button class="download-button">Download this template</button></a>
-          <p class="name-presentation">{{product.product_name}}</p>
-          <p class="info-presentation">
-            Wrap your business proposals or project presentations in the tranquil hues of nature with this pitch deck template. This creative template, designed for use in Google Slides and PowerPoint, allows your data and information to flourish amidst a delightful green backdrop. The template comes with different types of innovative infographics and charts that cater to your presentation needs. The greenery-palette purposefully mirrors eco-friendly practices underlining your commitment towards environmental sustainability. Make your ideas stand out with this visual stunner. Connect with your audience in a whole new way!
-          </p>
-        </div>
+<div class="total">
+  <div class="first-section">{{product.product_name}}</div>
+  <div class="second-section">
+    <div class="second-overview">
+      <!-- Main preview image: uses first slide or product file URL as fallback -->
+      {% if product.file.path and product.file.path|length >= 1 %}
+        <img class="presentation-photo" src="{{ slide_urls.0 }}" alt="First Slide Preview" id="mainPreview">
+      {% else %}
+        <img class="presentation-photo" src="{{ product.file.slide_url }}" alt="Presentation Photo" id="mainPreview">
+      {% endif %}
+      <div class="buttons-presentation">
+        <button class="like-button">Save</button>
+        <button class="like-button">Share</button>
       </div>
     </div>
-    <div>
-      {% for image_path in image_paths %}
-        <img src="{{image_path}}" alt="Slide" style="max-width: 100%;">
-      {% endfor %}
+    <div class="second-notes">
+      <a href="{% url 'download' product.product_name %}" target="_blank">
+        <button class="download-button">Download this template</button>
+      </a>
+      <p class="name-presentation">{{ product.product_name|default:"Unnamed Product" }}</p>
+      <p class="info-presentation">
+        {{ product.description|default:"No description available." }}
+      </p>
     </div>
-    <p class="relatedparagraph">Related presentations</p>
-    <div class="related">
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 1.webp" alt="Related 1">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 2.webp" alt="Related 2">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 3.webp" alt="Related 3">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 4.webp" alt="Related 4">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 5.webp" alt="Related 5">
-        <button class="relatedp-format">16:9</button>
-      </div>
-      <div class="related-presentations">
-        <img class="related-photo" src="Photos/related 6.webp" alt="Related 6">
-        <button class="relatedp-format">16:9</button>
-      </div>
-    </div>
-  </body>
-</html>
+  </div>
+</div>
 
+<!-- Slide thumbnails section -->
+<!-- Slide thumbnails section -->
+<div class="slide-thumbnails">
+  {% if slide_urls %}
+    {% for slide_url in slide_urls|slice:":10" %}
+      <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
+    {% empty %}
+      <p>No slides available.</p>
+    {% endfor %}
+  {% else %}
+    <p>No slides available.</p>
+  {% endif %}
+</div>
+
+<!-- Related presentations section -->
+<p class="relatedparagraph">Related presentations</p>
+<div class="related">
+  {% for related in relateds %}
+    <div class="related-presentations">
+      <img class="related-photo" src="{% url 'Product' related.id %}" alt="{{related.product_name}}">
+      <button class="relatedp-format">{{related.product_name}}</button>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all thumbnails and the main preview
+    const thumbnails = document.querySelectorAll('.slide-thumbnail');
+    const mainPreview = document.getElementById('mainPreview');
+
+    // Add click event to each thumbnail
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const newSlideUrl = this.getAttribute('data-slide-url');
+        mainPreview.src = newSlideUrl;
+      });
+    });
+  });
+</script>
 {% endblock %}
