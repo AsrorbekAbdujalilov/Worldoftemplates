@@ -22,14 +22,18 @@
         </div>
         <ul class="nav-links">
             <li><a href="{% url 'Home'%}">Home</a></li>
-            <li class="dropdown">
-                <a href="#">Product Type</a>
-                <ul class="dropdown-menu">
-                    {% for type in types %}
-                        <li><a href="{% url 'typeproducts' type.tag_name %}">{{type}}</a></li>
-                    {% endfor %}
-                </ul>
-            </li>
+            {% if types and user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#">Templates</a>
+                    <ul class="dropdown-menu">
+                        {% for type in types %}
+                            <li><a href="{% url 'typeproducts' type.tag_name %}">{{type}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="#">Templates</a></li>
+            {% endif %}
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
