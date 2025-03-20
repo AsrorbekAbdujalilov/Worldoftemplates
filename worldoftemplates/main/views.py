@@ -172,7 +172,7 @@ def searchrelatedProduct(request):
 @login_required(login_url='Login')
 def Products(request, pk):
     product = get_object_or_404(Product, id=pk)
-    relateds = Product.objects.filter(product_type__in=product.product_type.all())
+    relateds = Product.objects.filter(product_type__in=product.product_type.all()).exclude(product_name=product)
     types = Tag.objects.all()
     slide_urls = []
     

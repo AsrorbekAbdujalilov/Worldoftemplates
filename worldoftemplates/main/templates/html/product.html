@@ -46,15 +46,20 @@
 </div>
 
 <!-- Related presentations section -->
-<p class="relatedparagraph">Related presentations</p>
-<div class="related">
-  {% for related in relateds %}
-    <div class="related-presentations">
-      <img class="related-photo" src="{% url 'Product' related.id %}" alt="{{related.product_name}}">
-      <button class="relatedp-format">{{related.product_name}}</button>
-    </div>
-  {% endfor %}
-</div>
+{% if relateds %}
+  <p class="relatedparagraph">Related Presentations</p>
+  <div class="related">
+    {% for related in relateds %}
+      <div class="related-presentations">
+        <img class="related-photo" src="{% url 'Product' related.id %}" alt="{{related.product_name}}">
+        <button class="relatedp-format">{{related.product_name}}</button>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="relatedparagraph">No related presentations available.</p>
+{% endif %}
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
