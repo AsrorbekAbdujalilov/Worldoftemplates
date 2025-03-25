@@ -59,6 +59,105 @@
             background-repeat: no-repeat;
             background-position: center;
          }
+         
+         .relatedparagraph {
+         font-size: 24px;
+         font-weight: bold;
+         color: #333;
+         margin-top: 50px;
+         }
+
+         .related {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 20px;
+         margin-top: 20px;
+         }
+
+         .related-presentations {
+         width: calc(33.33% - 20px);
+         background-color: #fff;
+         border-radius: 10px;
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+         overflow: hidden;
+         cursor: pointer;
+         transition: transform 0.3s;
+         }
+
+         .related-presentations:hover {
+         transform: translateY(-10px);
+         }
+
+         .related-photo {
+         width: 100%;
+         height: 200px;
+         object-fit: cover;
+         border-bottom: 2px solid #ddd;
+         }
+
+         .relatedp-format {
+         background-color: white;
+         font-size: 16px;
+         color: #333;
+         border: none;
+         padding: 8px 16px;
+         width: 100%;
+         cursor: pointer;
+         text-align: center;
+         font-weight: bold;
+         }
+
+         .relatedp-format:hover {
+         background-color: #f0f0f0;
+         }
+
+         .slide-thumbnails {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         padding: 20px;
+         background-color: #f5f5f5;
+         }
+
+         .slide-thumbnails {
+         display: flex; /* Use flexbox for horizontal alignment */
+         flex-wrap: wrap; /* Allow wrapping if necessary */
+         justify-content: center; /* Center thumbnails horizontally */
+         gap: 5px; /* Add spacing between thumbnails */
+         margin: 10px 0; /* Add margin for spacing */
+         }
+
+         .slide-thumbnail {
+         max-width: 11%; /* Very small thumbnails */
+         height: auto; /* Maintain aspect ratio */
+         margin: 0; /* Remove individual margins */
+         cursor: pointer; /* Indicate that thumbnails are clickable */
+         transition: transform 0.2s; /* Smooth hover effect */
+         }
+
+         .slide-thumbnail:hover {
+         transform: scale(1.1); /* Slightly enlarge on hover for better UX */
+         }
+
+         .presentation-photo {
+         max-width: 100%;
+         }
+
+         @media (max-width: 768px) {
+         .slide-thumbnail {
+            max-width: 40px; /* Smaller on mobile if needed */
+         }
+         .related-presentations {
+            width: calc(50% - 20px);
+         }
+         }
+
+
+         @media (max-width: 480px) {
+         .related-presentations {
+            width: 100%;
+         }
+         }
       </style>
    </head>
    <body>
@@ -82,13 +181,6 @@
          <div class="header_section">
             <div class="container">
                <div class="containt_main">
-                  <div id="mySidenav" class="sidenav">
-                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                     <a href="index.html">Home</a>
-                     <a href="fashion.html">For History</a>
-                     <a href="electronic.html">For Physics</a>
-                     <a href="jewellery.html">For Math</a>
-                  </div>
                  
                   <div class="main">
                      <!-- Another variation with a button -->
@@ -117,7 +209,7 @@
                         <div class="row">
                            <div class="col-sm-12">
                               <h1 class="banner_taital">Get Start <br>with 
-                                 <span style="color: #002fff;">
+                                 <span style="color: #00167a;">
                                     WORLDOFTEMPLATES
                                  </span>
                               </h1>
@@ -145,17 +237,6 @@
          </div>
       {% endfor %}
       <!-- sidebar -->
-      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
-      <script>
-         function openNav() {
-           document.getElementById("mySidenav").style.width = "250px";
-         }
-         
-         function closeNav() {
-           document.getElementById("mySidenav").style.width = "0";
-         }
-      </script>
    </body>
 </html>
 
