@@ -55,9 +55,9 @@
          body{
             padding-top: 70px;
             background-image: url("{% static 'images/home/banner-bg.avif' %}");
-            background-size: 100%;
+            background-size: 100% 40%; /* Width is 100%, height is 70% */
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: top; 
          }
          
          .relatedparagraph {
@@ -157,6 +157,18 @@
          .related-presentations {
             width: 100%;
          }
+         }
+         .banner_taital {
+            width: 100%;
+            font-size: 60px;
+            color: #ffffff;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-family: 'Lexend Giga', sans-serif;
+            margin-top: 20px;
+            margin-bottom: 160px;
+
          }
       </style>
    </head>
