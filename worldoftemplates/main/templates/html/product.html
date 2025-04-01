@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
 
 <div class="total">
   <div class="first-section">{{product.product_name}}</div>
@@ -31,6 +31,21 @@
   </div>
 </div>
 
+
+<div class="slide-thumbnails">
+  {% if slide_urls %}
+    {% for slide_url in slide_urls %}
+      <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
+    {% empty %}
+      <p>No slides available.</p>
+    {% endfor %}
+  {% else %}
+    <p>No slides available.</p>
+  {% endif %}
+  <img src="{% static '/images/slide1.JPG' %}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{% static '/images/slide1.JPG' %}">
+</div>
+
+
 <!-- Related presentations section -->
 {% if relateds %}
   <p class="relatedparagraph">Related Presentations</p>
@@ -57,7 +72,9 @@
     thumbnails.forEach(thumbnail => {
       thumbnail.addEventListener('click', function() {
         const newSlideUrl = this.getAttribute('data-slide-url');
-        mainPreview.src = newSlideUrl;
+        if (newSlideUrl) {
+          mainPreview.src = newSlideUrl; // Update the main preview image
+        }
       });
     });
   });

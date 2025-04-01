@@ -198,7 +198,7 @@ button {
 }
 
 .layout_padding {
-    padding-top: 90px;
+    padding-top: 40px;
     padding-bottom: 0px;
 }
 
@@ -473,7 +473,6 @@ button {
 .banner_section {
     width: 100%;
     float: left;
-    padding-bottom: 60px;
 }
 
 .buynow_bt {

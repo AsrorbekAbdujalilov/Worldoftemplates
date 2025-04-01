@@ -156,7 +156,9 @@ def searchrelatedProduct(request):
         types = Tag.objects.all()
 
         if search_term:
-            relateds = relateds.filter(product_name__icontains=search_term)
+            relateds = relateds.filter(product_name__icontains=search_term) or relateds.filter(description__icontains=search_term) or relateds.filter(office_created__icontains=search_term) or relateds.filter(product_type__tag_name__icontains=search_term)
+        else:  
+            relateds = Product.objects.none()
 
         for related in relateds:
             if related.file:
@@ -182,7 +184,7 @@ def Products(request, pk):
         slides_folder = os.path.join(settings.MEDIA_URL, pptx_folder)
 
         # Dynamically check how many slides exist
-        for i in range(1, 11):  # Maximum 10 slides
+        for i in range(1, 6):  # Maximum 10 slides
             image_path = os.path.join(settings.MEDIA_ROOT, pptx_folder, f"slide{i}.jpg")
             if os.path.exists(image_path):
                 slide_urls.append(f"{slides_folder}/slide{i}.jpg")

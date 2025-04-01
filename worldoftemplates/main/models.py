@@ -38,6 +38,8 @@ class Product(models.Model):
         ('Office 2016', 'Office 2016'),
         ('Office 2019', 'Office 2019'),
         ('Office 2021', 'Office 2021'),
+        ('Office 2024', 'Office 2024'),
+        ('Office 365', 'Office 365'),
     }
     product_name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -90,7 +92,7 @@ class Product(models.Model):
 
             doc = fitz.open(pdf_path)
             image_paths = []
-            num_pages = min(10, len(doc))  # Limit to first 10 slides
+            num_pages = min(5, len(doc))  # Limit to first 10 slides
             for i in range(num_pages):
                 page = doc[i]
                 pix = page.get_pixmap()
