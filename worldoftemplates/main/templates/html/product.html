@@ -31,20 +31,6 @@
   </div>
 </div>
 
-<!-- Slide thumbnails section -->
-<!-- Slide thumbnails section -->
-<div class="slide-thumbnails">
-  {% if slide_urls %}
-    {% for slide_url in slide_urls|slice:":10" %}
-      <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
-    {% empty %}
-      <p>No slides available.</p>
-    {% endfor %}
-  {% else %}
-    <p>No slides available.</p>
-  {% endif %}
-</div>
-
 <!-- Related presentations section -->
 {% if relateds %}
   <p class="relatedparagraph">Related Presentations</p>
