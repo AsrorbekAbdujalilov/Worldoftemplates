@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/pro_duct.css' %}">
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
 
 <div class="total">
   <div class="first-section">{{product.product_name}}</div>
@@ -31,11 +31,10 @@
   </div>
 </div>
 
-<!-- Slide thumbnails section -->
-<!-- Slide thumbnails section -->
+
 <div class="slide-thumbnails">
   {% if slide_urls %}
-    {% for slide_url in slide_urls|slice:":10" %}
+    {% for slide_url in slide_urls %}
       <img src="{{ slide_url }}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{{ slide_url }}">
     {% empty %}
       <p>No slides available.</p>
@@ -43,18 +42,25 @@
   {% else %}
     <p>No slides available.</p>
   {% endif %}
+  <img src="{% static '/images/slide1.JPG' %}" alt="Slide Thumbnail" class="slide-thumbnail" data-slide-url="{% static '/images/slide1.JPG' %}">
 </div>
 
+
 <!-- Related presentations section -->
-<p class="relatedparagraph">Related presentations</p>
-<div class="related">
-  {% for related in relateds %}
-    <div class="related-presentations">
-      <img class="related-photo" src="{% static 'Photos/related_'|add:i|add:'.webp' %}" alt="{{related.product_name}}">
-      <button class="relatedp-format">{{related.product_name}}</button>
-    </div>
-  {% endfor %}
-</div>
+{% if relateds %}
+  <p class="relatedparagraph">Related Presentations</p>
+  <div class="related">
+    {% for related in relateds %}
+      <div class="related-presentations">
+        <img class="related-photo" src="{% url 'Product' related.id %}" alt="{{related.product_name}}">
+        <button class="relatedp-format">{{related.product_name}}</button>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="relatedparagraph">No related presentations available.</p>
+{% endif %}
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -66,7 +72,9 @@
     thumbnails.forEach(thumbnail => {
       thumbnail.addEventListener('click', function() {
         const newSlideUrl = this.getAttribute('data-slide-url');
-        mainPreview.src = newSlideUrl;
+        if (newSlideUrl) {
+          mainPreview.src = newSlideUrl; // Update the main preview image
+        }
       });
     });
   });

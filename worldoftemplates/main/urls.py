@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls.static import static
 from .views import *
 
 
@@ -15,7 +14,7 @@ urlpatterns = [
 
   path('', Home, name='Home'),
   path('products/<str:type>/', ProductType, name='typeproducts'),
-  path('related_products', searchrelatedProduct, name='related'),
+  path('related_products/', searchrelatedProduct, name='related'),
   path('product/<str:pk>/', Products, name='Product'),
   path('download/<str:filename>/', download_file, name='download'),
 
