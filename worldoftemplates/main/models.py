@@ -6,11 +6,7 @@ import subprocess
 from django.shortcuts import render
 from django.conf import settings
 import pymupdf as fitz  # PyMuPDF
-from pptx import Presentation
-from PIL import Image
 
-# Path to LibreOffice executable (adjust if necessary)
-LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
 # Customer Model
 class Customer(models.Model):
@@ -52,58 +48,4 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name if self.product_name else "Unnamed Product"
 
-    def save(self, *args, **kwargs):
-        is_new = self.pk is None  # Check if this is a new file
-        super().save(*args, **kwargs)  # Save first to get the file path    
-
-        if is_new and self.file:
-            unique_id = str(uuid.uuid4())  # Generate a unique folder ID
-            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', unique_id)
-            os.makedirs(upload_dir, exist_ok=True)  # ✅ Create the folder first    
-
-            pptx_path = os.path.join(upload_dir, os.path.basename(self.file.name))  
-            # Move file to UUID folder 
-            with open(pptx_path, 'wb+') as f:
-                for chunk in self.file.chunks():
-                    f.write(chunk)
-
-            for ext in ('.pptx', '.pptm', '.ppt'):
-                if pptx_path.lower().endswith(ext):
-                    pdf_path = pptx_path[: -len(ext)] + '.pdf'
-                    break
-
-            # ✅ Convert PPTX to PDF using LibreOffice
-            convert_command = [
-                LIBREOFFICE_PATH, "--headless", "--convert-to", "pdf:writer_pdf_Export", pptx_path, "--outdir", upload_dir
-            ]
-            subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-            # ✅ Check if an extra PDF was created outside the folder
-            original_pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"  # Where LibreOffice might save it
-            pdf_path = os.path.join(upload_dir, os.path.basename(original_pdf_path))  # Correct location
-
-            # ✅ If the extra PDF exists outside, delete it
-            if original_pdf_path != pdf_path and os.path.exists(original_pdf_path):
-                os.remove(original_pdf_path)  #
-
-            doc = fitz.open(pdf_path)
-            image_paths = []
-            num_pages = min(10, len(doc))  # Limit to first 10 slides
-            for i in range(num_pages):
-                page = doc[i]
-                pix = page.get_pixmap()
-                image_path = os.path.join(upload_dir, f'slide{i+1}.jpg')
-                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-                img.save(image_path, format="JPEG")  # Save as JPEG
-
-                image_paths.append(os.path.join('uploads', unique_id, f'slide{i+1}.png'))
-
-            doc.close()
-
-            # ✅ Update file path to the new UUID-based location
-            self.file.name = f'uploads/{unique_id}/{self.file.name.split('/')[-1]}'
-            try:
-                os.remove(pdf_path)
-            except PermissionError:
-                pass  # If file is locked, don't crash
-            super().save(update_fields=['file'])  # Save the new file path in the database
+   
