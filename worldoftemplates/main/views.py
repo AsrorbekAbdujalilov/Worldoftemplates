@@ -57,6 +57,7 @@ def Verification(request, user, to_email):
     else:
         messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
 
+#[Errno 11001] getaddrinfo failed
 @authenticated
 def RegisterPage(request):
     form = CreateUserForm()
