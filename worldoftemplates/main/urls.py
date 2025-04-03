@@ -1,8 +1,9 @@
 from django.urls import path
 from .views import *
 
+from  django.contrib.auth import views as auth_views
 
-from django.contrib.auth import views as auth_views
+handeler404 = 'main.views.handler404'
 
 urlpatterns = [
   path('login/', LoginPage, name='Login'),

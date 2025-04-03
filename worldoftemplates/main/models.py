@@ -5,7 +5,14 @@ import uuid
 import subprocess
 from django.shortcuts import render
 from django.conf import settings
+'''
 import pymupdf as fitz  # PyMuPDF
+<<<<<<< HEAD
+=======
+from pptx import Presentation
+from PIL import Image
+'''
+>>>>>>> 7e994095f61a865b39eeea2432db390df3866f5c
 
 
 # Customer Model
@@ -49,6 +56,7 @@ class Product(models.Model):
     cost = models.FloatField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
+'''
     def __str__(self):
         return self.product_name if self.product_name else "Unnamed Product"
 
@@ -79,7 +87,8 @@ class Product(models.Model):
             subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             # ✅ Check if an extra PDF was created outside the folder
-            original_pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"  # Where LibreOffice might save it
+            original_pdf_path = self.file.path + ".pdf"  # Where LibreOffice might save it
+            print(original_pdf_path)
             pdf_path = os.path.join(upload_dir, os.path.basename(original_pdf_path))  # Correct location
 
             # ✅ If the extra PDF exists outside, delete it
@@ -107,3 +116,4 @@ class Product(models.Model):
             except PermissionError:
                 pass  # If file is locked, don't crash
             super().save(update_fields=['file'])  # Save the new file path in the database
+'''

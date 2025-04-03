@@ -31,7 +31,7 @@
       <!-- bootstrap css -->
       <link rel="stylesheet" type="text/css" href="{% static 'css/home/bootstrap.min.css' %}">
       <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/home/mainstyle.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/home/mainstylee.css' %}">
       <!-- Responsive-->
       <link rel="stylesheet" href="{% static 'css/home/responsive.css' %}">
       <!-- fevicon -->
@@ -53,11 +53,13 @@
 
       <style>
          body{
-            padding-top: 70px;
+            margin: 0;
+            padding-top: 100px; /* Creates space above the background */
             background-image: url("{% static 'images/home/banner-bg.avif' %}");
-            background-size: 100% 500px; /* Width is 100%, height is 70% */
+            background-size: 100% 500px;
             background-repeat: no-repeat;
-            background-position: top; 
+            background-position: top center; /* Positions at top (below the padding) */
+            min-height: 100vh; /* Ensures body covers full viewport */
          }
          
          .relatedparagraph {
@@ -143,7 +145,7 @@
             display: block;
             background-color: rgb(255, 255, 255);
             box-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);
-            margin-top: 450px;
+            margin-top: 350px;
             margin-left: 10px;
             margin-right: 10px;
             padding: 10px;

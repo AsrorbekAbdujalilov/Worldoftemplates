@@ -14,10 +14,6 @@
       {% else %}
         <img class="presentation-photo" src="{{ product.file.slide_url }}" alt="Presentation Photo" id="mainPreview">
       {% endif %}
-      <div class="buttons-presentation">
-        <button class="like-button">Save</button>
-        <button class="like-button">Share</button>
-      </div>
     </div>
     <div class="second-notes">
       <a href="{% url 'download' product.product_name %}" target="_blank">
@@ -51,10 +47,10 @@
   <p class="relatedparagraph">Related Presentations</p>
   <div class="related">
     {% for related in relateds %}
-      <div class="related-presentations">
-        <img class="related-photo" src="{% url 'Product' related.id %}" alt="{{related.product_name}}">
+      <a class="related-presentations" href="{% url 'Product' related.id %}">
+        <img class="related-photo" src="{{ related.image_preview }}" alt="{{related.product_name}}">
         <button class="relatedp-format">{{related.product_name}}</button>
-      </div>
+      </a>
     {% endfor %}
   </div>
 {% else %}

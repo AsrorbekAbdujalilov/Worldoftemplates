@@ -23,14 +23,33 @@ html {
     overflow-x: hidden;
 }
 
+body::before {
+    content: '';
+    display: block;
+    height: 100px; /* Adjust this value to control the space */
+    width: 100%;
+}
+
 body {
     color: #666666;
+    margin: 0;
+    position: relative;
     font-size: 14px;
     line-height: 1.80857;
     font-weight: normal;
     overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
+    background-position: center bottom;
+    background-image: url("{% static 'images/home/banner-bg.avif' %}");
+    background-size: 100% 500px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: scroll;
+    padding-top: 0; /* Remove any padding */
+
 }
+
+
 
 a {
     color: #1f1f1f;
@@ -287,6 +306,10 @@ button {
 .header_section {
     width: 100%;
     display: flex;
+    margin-top: 50px; /* Adjust this value as needed */
+    position: relative;
+    top: -150px; /* Adjust this value to move content higher */
+    margin-bottom: -150px;
 }
 
 .containt_main {
@@ -473,6 +496,8 @@ button {
 .banner_section {
     width: 100%;
     float: left;
+    margin-top: -50px;
+    padding-bottom: 20px;
 }
 
 .buynow_bt {

@@ -3,16 +3,17 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static '/css/account.css' %}">
+<link rel="stylesheet" href="{% static '/css/profile.css' %}">
     <style>
     </style>
 
     <div class="upper-info">
-        <div class="placeholder-image"></div>
-        <a href="{% url 'Logout' %}" class="logout"><button class="logout-btn">Log Out</button></a>
-        <div class="profile-pic-container" id="profileUpload">
-            <img src="{{request.user.customer.image.url}}" alt="Profile Picture" class="profile-pic" id="profilePic">
-            <input type="file" id="fileInput" accept="image/*">
+        <div class="profile-section">
+            <div class="profile-pic-container" id="profileUpload">
+                <img src="{{request.user.customer.image.url}}" alt="Profile Picture" class="profile-pic" id="profilePic">
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <a href="{% url 'Logout' %}" class="logout"><button class="logout-btn">Log Out</button></a>
         </div>
         <div class="upper-info-text">
             <h2 id="fullName">{{customer.first_name}} {{customer.last_name}}</h2>

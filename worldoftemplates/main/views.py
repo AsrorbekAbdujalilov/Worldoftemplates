@@ -177,6 +177,12 @@ def Products(request, pk):
     relateds = Product.objects.filter(product_type__in=product.product_type.all()).exclude(product_name=product)
     types = Tag.objects.all()
     slide_urls = []
+
+    for related in relateds:
+        if related.file:
+            pptx_url = related.file.url
+            image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')            
+            related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
     
     if product.file:
         # Get the folder where images are stored
@@ -227,3 +233,6 @@ def ContactPage(request):
     types = Tag.objects.all()
     context = {'types':types}
     return render(request, 'html/contact.html', context)
+
+def PageNotFound(request, exception):
+    return render(request, 'html/404.html', status=404)
