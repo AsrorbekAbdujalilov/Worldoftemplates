@@ -5,9 +5,11 @@ import uuid
 import subprocess
 from django.shortcuts import render
 from django.conf import settings
+'''
 import pymupdf as fitz  # PyMuPDF
 from pptx import Presentation
 from PIL import Image
+'''
 
 # Path to LibreOffice executable (adjust if necessary)
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
@@ -53,6 +55,7 @@ class Product(models.Model):
     cost = models.FloatField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
+'''
     def __str__(self):
         return self.product_name if self.product_name else "Unnamed Product"
 
@@ -111,3 +114,4 @@ class Product(models.Model):
             except PermissionError:
                 pass  # If file is locked, don't crash
             super().save(update_fields=['file'])  # Save the new file path in the database
+'''

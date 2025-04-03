@@ -1,3 +1,5 @@
+
+'''
 import os
 import uuid
 import subprocess
@@ -50,3 +52,4 @@ def convert_pptx_to_jpeg(self):
         pass  # If file is locked, skip deletion
 
     return image_paths  # Return the paths of generated images
+'''
