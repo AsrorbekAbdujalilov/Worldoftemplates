@@ -83,7 +83,8 @@ class Product(models.Model):
             subprocess.run(convert_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             # ✅ Check if an extra PDF was created outside the folder
-            original_pdf_path = os.path.splitext(pptx_path)[0] + ".pdf"  # Where LibreOffice might save it
+            original_pdf_path = self.file.path + ".pdf"  # Where LibreOffice might save it
+            print(original_pdf_path)
             pdf_path = os.path.join(upload_dir, os.path.basename(original_pdf_path))  # Correct location
 
             # ✅ If the extra PDF exists outside, delete it
