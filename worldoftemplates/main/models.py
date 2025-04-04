@@ -9,7 +9,6 @@ import pymupdf as fitz  # PyMuPDF
 from pptx import Presentation
 from PIL import Image
 
-
 # Path to LibreOffice executable (adjust if necessary)
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 

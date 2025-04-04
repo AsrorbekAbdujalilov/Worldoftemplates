@@ -107,13 +107,18 @@
       <p class="troubleshootpara">
         Troubleshoot
       </p>
-      <input class="placeholder" type="text" placeholder="Enter your username or email">
-      <p class="login">
-        Have an account? <span class="log">Log in</span>
-      </p>
-      <button class="send-button">
-        Send link
-      </button>
+      <form action="" method="POST">
+        {% csrf_token %}
+          <input class="placeholder" type="text" placeholder="Enter your username or email">
+          <p class="login">
+            Have an account? <span class="log">Log in</span>
+          </p>
+          <button class="send-button">
+            Send link
+          </button>
+      </form>  
+
+
     </div>
   </body>
 </html>
