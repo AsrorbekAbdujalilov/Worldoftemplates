@@ -1,74 +1,32 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
 
-    <title>Register Page</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static '/css/register.css' %}">
-
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    height: 100vh;
-    background-image: url("{% static '/images/OIG4.jfif' %}");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.submit-btn{
-    background: linear-gradient(45deg, #023047,#219ebc);
-    border: none;
-    opacity: 1;
-    margin-bottom: 5px;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    cursor: pointer;
-    transition: opacity 0.3s;
-}
-    </style>
-
+    <link rel="stylesheet" href="{% static '/css/register1.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="form-container">
-            <h2>REGISTER</h2>
-            <form action="#" method="POST">
-                
+            <h2>Register</h2>
+            <form method="POST">
                 {% csrf_token %}
-
-                {% for forms in form %}
-                    {{forms}}
+                {% for field in form %}
+                    {{ field }}
                 {% endfor %}
-
-                <button type="submit" class="submit-btn">REGISTER</button>
+                <button type="submit" class="submit-btn">Register</button>
             </form>
-                <ul style="color: red; font-size: 14px; font-family: 'Trebuchet MS', sans-serif; list-style: none; padding: 5px;">
-                    {{ form.errors }}
-                </ul> 
-                <div>
-                    {% for message in messages %}
-                        <p style="color: red; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 14px;">{{message}}</p>
-                    {% endfor %}
-                </div>   
-                <p style="margin: 5px;">If you already have an account, here <a href="{% url 'Login' %}">Login!</a></p>
+
+            <ul class="error-list">{{ form.errors }}</ul>
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+
+            <p class="small-text">Already have an account? <a href="{% url 'Login' %}">Login</a></p>
         </div>
     </div>
 </body>
