@@ -235,5 +235,5 @@ def ContactPage(request):
     context = {'types':types}
     return render(request, 'html/contact.html', context)
 
-def PageNotFound(request, exception):
+def custom_404_handler(request, exception):
     return render(request, 'html/404.html', status=404)
