@@ -21,7 +21,14 @@
       </a>
       <p class="name-presentation">{{ product.product_name|default:"Unnamed Product" }}</p>
       <p class="info-presentation">
-        {{ product.description|default:"No description available." }}
+        description: {{ product.description|default:"No description available." }}
+        office_created: {{ product.office_created }}
+        morph: {{ product.morph }}
+        premium: {{ product.premium }}
+        favorite: {{ product.favorite }}
+        product_type: {{ product.product_type }}
+        size: {{ product.size }}
+        cost: {{ product.cost }}
       </p>
     </div>
   </div>
