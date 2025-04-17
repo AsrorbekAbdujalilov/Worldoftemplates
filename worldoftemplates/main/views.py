@@ -133,6 +133,12 @@ def Home(request):
     return render(request, 'html/home.html', context)
 
 @login_required(login_url='Login')
+def Types(request):
+    types = Tag.objects.all()
+    context = {"types": types}
+    return render(request, 'html/types.html', context)
+
+@login_required(login_url='Login')
 def ProductType(request, type):
     types = Tag.objects.all()
     product_type = get_object_or_404(Tag, tag_name=type)
