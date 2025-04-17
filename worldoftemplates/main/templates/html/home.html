@@ -29,15 +29,7 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/home/bootstrap.min.css' %}">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/home/mainstylee.css' %}">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="{% static 'css/home/responsive.css' %}">
-      <!-- fevicon -->
-      <link rel="icon" href="{% static '/images/home/fevicon.png' %}" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="{% static 'css/home/jquery.mCustomScrollbar.min.css' %}">
+     
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
       <!-- fonts -->
@@ -145,7 +137,7 @@
             display: block;
             background-color: rgb(255, 255, 255);
             box-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);
-            margin-top: 350px;
+            margin-top: 200px;
             margin-left: 10px;
             margin-right: 10px;
             padding: 10px;
@@ -180,50 +172,64 @@
             font-weight: bold;
             font-family: 'Lexend Giga', sans-serif;
             margin-top: 10px;
-
          }
+
+         .search-form {
+            justify-content: center;
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+         }
+
+         .search-form input {
+            width: 100%;
+            padding: 10px 100px 10px 15px; /* Padding right for the button space */
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: 0.3s ease;
+         }
+
+         .search-form input:focus {
+            border-color: #219ebc;
+            box-shadow: 0 0 0 2px rgba(33, 158, 188, 0.2);
+         }
+
+         .search-form button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 20px;
+            background: linear-gradient(45deg, #219ebc, #002fff);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.3s ease;
+            height: 80%;
+         }
+
+         .search-form button:hover {
+            background: linear-gradient(45deg, #002fff, #11c2ee);
+         }
+
 
       </style>
    </head>
    <body>
       <!-- banner bg main start -->
-      <div class="banner_bg_main">
-         <!-- header top section start -->
-         
-         <!-- header top section start -->
-         <!-- logo section start -->
-         <div class="logo_section">
-            <div class="container">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <div class="logo"><a href="index.html"><img src="" alt=""></a></div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <!-- logo section end -->
-         <!-- header section start -->
-         <div class="header_section">
-            <div class="container">
-               <div class="containt_main">
-                 
-                  <div class="main">
-                     <!-- Another variation with a button -->
-                     <div>
-                        <form action="{% url 'related' %}" method="GET" class="input-group">
-                           <input type="text" name="search" class="form-control" placeholder="Search a template">
-                           <div class="input-group-append">
-                               <button class="btn btn-secondary" type="submit" style="background-color: #002fff; border-color:#00115a69">
-                                   <i class="fa fa-search"></i>
-                               </button>
-                           </div>
-                       </form>
-                     </div>
-                  </div>
-                  
-               </div>
-            </div>
-         </div>
+      <form action="{% url 'related' %}" method="GET" class="search-form">
+         <input type="text" name="search" placeholder="Search a template">
+         <button type="submit">Search</button>
+     </form>
+     
          <!-- header section end -->
          <!-- banner section start -->
          <div class="banner_section layout_padding">
