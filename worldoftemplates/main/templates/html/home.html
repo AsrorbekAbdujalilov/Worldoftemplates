@@ -5,7 +5,7 @@
 <!-- Banner Section -->
 <div class="banner_section relative min-h-[600px] flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent z-10"></div>
-    <div class="parallax-bg absolute inset-0 bg-cover bg-center" style="background-image: url('{% static 'images/home/banner-bg.avif' %}');"></div>
+    <div class="parallax-bg absolute inset-0 bg-cover bg-center"></div>
     <div class="container relative z-20 text-center">
         <h1 class="banner_taital text-6xl md:text-8xl font-bold text-white animate-pulse">
             Get Started with
@@ -30,12 +30,6 @@
             >
                 <i class="fa fa-search" aria-hidden="true"></i>
             </button>
-            <!-- Mock Autocomplete Dropdown -->
-            <div class="autocomplete hidden absolute w-full mt-2 bg-white/10 backdrop-blur-md rounded-lg shadow-lg z-30">
-                <div class="p-2 text-white/80 hover:bg-white/20 cursor-pointer">Business Templates</div>
-                <div class="p-2 text-white/80 hover:bg-white/20 cursor-pointer">Creative Templates</div>
-                <div class="p-2 text-white/80 hover:bg-white/20 cursor-pointer">Minimalist Templates</div>
-            </div>
         </form>
     </div>
     <!-- Particle Canvas -->
@@ -185,88 +179,6 @@
         border: 0;
     }
 </style>
-
-<script>
-// Particle Animation
-function initParticles() {
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-    const particleCount = 100;
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 0.5 - 0.25;
-            this.speedY = Math.random() * 0.5 - 0.25;
-        }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.size > 0.2) this.size -= 0.01;
-        }
-
-        draw() {
-            ctx.fillStyle = 'rgba(0, 255, 136, 0.8)';
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((particle, index) => {
-            particle.update();
-            particle.draw();
-            if (particle.size <= 0.2) {
-                particles.splice(index, 1);
-                particles.push(new Particle());
-            }
-        });
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-}
-
-// GSAP Scroll Animations
-document.addEventListener('DOMContentLoaded', () => {
-    gsap.from('.banner_taital', { opacity: 0, y: 50, duration: 1.5, ease: 'power3.out' });
-    gsap.from('.search-form', { opacity: 0, y: 30, duration: 1.5, delay: 0.5, ease: 'power3.out' });
-
-    gsap.utils.toArray('.related-presentations').forEach(card => {
-        gsap.from(card, {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            }
-        });
-    });
-
-    initParticles();
-});
-
-// Parallax Effect
-window.addEventListener('scroll', () => {
-    const parallax = document.querySelector('.parallax-bg');
-    const scrollPosition = window.pageYOffset;
-    parallax.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-});
-</script>
+<script src="{% static 'js/particle.js' %}"></script>
+<script src="{% static 'js/parallex.js' %}"></script>
 {% endblock %}
-{% load static %}
