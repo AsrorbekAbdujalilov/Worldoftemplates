@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/mainstyle.css' %}">
 <!-- Banner Section -->
 <div class="banner_section relative min-h-[600px] flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent z-10"></div>
-    <div class="parallax-bg absolute inset-0 bg-cover bg-center"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent z-10" ></div>
+    <div class="parallax-bg absolute inset-0 bg-cover bg-center" style="background-image: url('{% static 'images/Black Hole.jpg' %}');"></div>
     <div class="container relative z-20 text-center">
         <h1 class="banner_taital text-6xl md:text-8xl font-bold text-white animate-pulse">
             Get Started with

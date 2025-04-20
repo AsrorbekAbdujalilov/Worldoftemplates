@@ -7,6 +7,7 @@ from django import forms
 from .models import *
 
 class ProfileInput(ModelForm):
+  image = forms.ImageField(widget=forms.FileInput())
   class Meta:
     model = Customer
     fields = '__all__'

@@ -1,15 +1,35 @@
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background: #284b635b;
-    margin: 0;
-    padding: 20px;
+    background-color: #000000;
+}
+
+a{
+    text-decoration: none;
 }
 
 h1 {
+    color: #00ff88;
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
     font-size: 35px;
+    text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 20px #219ebc;
+    animation: neon-flicker 2s infinite alternate;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes pulse {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.5;
+  }
 }
 
 .profile-container {
@@ -30,30 +50,20 @@ h1 {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 700;
     font-size: 18px;
-    padding: 10px 20px;
-    background: linear-gradient(to right, #001058, #765dff);
+    padding: 20px 40px 20px 40px;
+    background: linear-gradient(to right, #00ff88, #219ebc);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
     display: block;
-    margin: 20px auto 0;
-   
-    margin: 20px auto 0; /* Add margin to position below profile */
-    top: auto; /* Remove absolute positioning */
-    right: auto;
-
-    margin-top: 20px;
-    position: static;      
-    margin-top: 20px;
-    margin-bottom: 00px;
 
     
 }
 
 .logout-btn:hover {
-    background: linear-gradient(to right, #002fff, #765dff);
+    background: linear-gradient(to left, #00ff88, #219ebc);
 }
 
 /* Upper Info - Profile Section */
@@ -62,7 +72,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(#00fff24b, #fff8f8) no-repeat;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), #1f2937);
     background-size: 100% 100%;
     width: 70%;
     margin: 20px auto;
@@ -73,7 +83,7 @@ h1 {
     margin-top: 0; /* Remove any negative margin-top */
     padding-top: 40px; /* Adjust padding as needed */
     position: relative;
-    padding-top: 60px;
+    padding-top: 70px;
     margin-top: 20px;
 }
 
@@ -81,7 +91,8 @@ h1 {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    border: 6px solid rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 20px #219ebc;
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -111,18 +122,18 @@ h1 {
 .upper-info-text h2 {
     margin: 0;
     font-size: 40px;
-    color: #333;
+    color: #ffffff;
 }
 
 .upper-info-text p {
     margin: 10px 0;
     font-size: 18px;
-    color: gray;
+    color: rgb(255, 255, 255);
 }
 
 /* Info Container */
 .info-container {
-    background: white;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), #1f2937);;
     padding: 40px;
     width: 60%;
     margin: 20px auto;
@@ -131,20 +142,21 @@ h1 {
 }
 
 form input {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
     transition: box-shadow 0.15s cubic-bezier(.4,0,.2,1);
     width: 100%;
     border-radius: .5rem;
-    border: 3px solid #001058;
+    border: none;
     padding: 10px .75rem;
     font-size: 1rem;
     font-weight: 500;
-    color: rgb(91, 100, 121);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.25rem;
 }
 
 form input:focus {
-    border-color: #2193b0;
+    box-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 20px #219ebc;
     outline: none;
 }
 
@@ -156,7 +168,7 @@ form input:focus {
 button {
     padding: 12px 25px;
     border: none;
-    background: #2193b0;
+    background: #00ff88;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -165,7 +177,7 @@ button {
 }
 
 .save-btn {
-    background: linear-gradient(45deg, #023047,#219ebc);
+    background: linear-gradient(to right, #00ff88, #219ebc);
     border-radius: 35px;
     width: 180px;
     height: 60px;
@@ -176,11 +188,12 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(45deg, #002fff,#11c2ee);
-    opacity:0.8;
+    background: linear-gradient(to right, #00ff88, #002fff);
+    opacity: 0.8;
 }
 
 label {
+    color: #ffffff;
     font-size: 35px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: block;
@@ -215,31 +228,24 @@ label {
     }
 }
 
-.custom-file-input {
+#id_image {
     display: block;
     width: 100%;
     padding: 8px;
-    border: 2px solid #333;
-    border-radius: 5px;
-    background-color: #f8f9fa;
     cursor: pointer;
+    color: #ffffff;
 }
 
-.custom-file-input::file-selector-button {
-    background-color: #007bff;
-    color: white;
+#id_image::file-selector-button {
+    background-color: #00ff88;
+    color: none;
     border: none;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
+    
 }
 
-.custom-file-input::file-selector-button:hover {
-    background-color: #0056b3;
-}
-
-label[for="id_image"],
-.clearable-file-input,
-input[type="checkbox"] {
-    display: none !important;
+#id_image::file-selector-button:hover {
+    background-color: #008a49;
 }

@@ -7,13 +7,7 @@
 <p style="margin-top: 40px;" class="relatedparagraph">More Types...</p>
 
 {% for type in types %}
-<div class="total">
-
-  <!-- Related presentations section -->
-  <div class="related">
-        <a href="{% url 'typeproducts' type.tag_name %}" class="relatedp-format">{{type.tag_name}}</a>
-  </div>
-</div>
+    <a href="{% url 'typeproducts' type.tag_name %}" class="relatedp-format">{{type.tag_name}}</a>
 {% endfor %}
 
 {% endblock %}
