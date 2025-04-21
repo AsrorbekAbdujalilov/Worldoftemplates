@@ -9,12 +9,19 @@
   <!-- Related presentations section -->
   <p class="relatedparagraph">Related presentations</p>
   <div class="related">
-    {% for related in relateds %}
-    <a class="related-presentations" href="{% url 'Product' related.id %}">
-        <img class="related-photo" src="{{ related.image_preview }}" alt="Related {{ related.product_name }}">
-        <button class="relatedp-format">{{related.product_name}}</button>
+    {% if relateds %}
+      {% for related in relateds %}
+      <a class="related-presentations" href="{% url 'Product' related.id %}">
+          <img class="related-photo" src="{{ related.image_preview }}" alt="Related {{ related.product_name }}">
+          <button class="relatedp-format">{{related.product_name}}</button>
+      </a>
+      {% endfor %}
+    {% else %}
+    <a class="related-presentations" href="{% url 'Home' %}">
+      <button class="relatedp-format">No Presentation Found</button>
+      <button class="relatedp-format">Back To Home</button>
     </a>
-    {% endfor %}
+    {% endif %}
   </div>
 
 </div>
