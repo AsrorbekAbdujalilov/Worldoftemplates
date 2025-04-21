@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static '/css/sidebar.css' %}">
 </head>
 <body>
     <nav class="thesidebar">
         <div class="nav-container">
             <div class="brand">
-                <img src="logo.png" alt="World of Templates" class="logo-image">
+                <img src="{% static 'logo.png' %}" alt="World of Templates" class="logo-image">
                 <p class="project-name">World of Templates</p>
             </div>
             <div class="hamburger">
@@ -20,7 +20,7 @@
                 <span></span>
             </div>
             <ul class="nav-links">
-                <li><a href="{% url 'Home'%}" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+                <li><a href="{% url 'Home' %}">Home</a></li>
                 {% if types and user.is_authenticated %}
                     <li class="dropdown">
                         <a href="{% url 'types' %}">Templates</a>
@@ -33,13 +33,15 @@
                 {% else %}
                     <li><a href="{% url 'types' %}">Templates</a></li>
                 {% endif %}
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}">Profile</a></li>
-                {% else %}
-                    <li><a href="{% url 'Login' %}">Login</a></li>
-                {% endif %}
                 <li><a href="{% url 'Contact' %}">Contact</a></li>
-                <li><a href="{% url 'About' %}">About Us</a></li>
+                <li class="profile-container">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}">Profile</a>
+                        <img src="{% static 'avatar.jpg' %}" alt="User Avatar" class="user-image">
+                    {% else %}
+                        <a href="{% url 'Login' %}">Login</a>
+                    {% endif %}
+                </li>     
             </ul>
         </div>
     </nav>
