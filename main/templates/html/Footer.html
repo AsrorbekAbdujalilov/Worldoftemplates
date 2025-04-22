@@ -1,4 +1,6 @@
-<footer style="background: #0A0F1E; color: white; padding: 3rem 0; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+{% load static %}
+
+<footer style="background: #0A0F1E; color: white; padding: 3rem 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 20px;">
     <div style="max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;">
         <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; margin-bottom: 2rem;">
             <!-- Quick Links -->
@@ -23,6 +25,11 @@
                     <li style="margin-bottom: 0.5rem;">
                         <a href="{% url 'profile' %}" style="font-family: 'Inter', sans-serif; font-size: 1rem; color: white; text-decoration: none; position: relative; display: inline-block; transition: color 0.3s ease-in-out;">
                             <span style="position: relative; display: inline-block; transition: font-size 0.3s ease-in-out, text-shadow 0.3s ease-in-out;">Profile</span>
+                        </a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;">
+                        <a href="{% url 'About' %}" style="font-family: 'Inter', sans-serif; font-size: 1rem; color: white; text-decoration: none; position: relative; display: inline-block; transition: color 0.3s ease-in-out;">
+                            <span style="position: relative; display: inline-block; transition: font-size 0.3s ease-in-out, text-shadow 0.3s ease-in-out;">About us</span>
                         </a>
                     </li>
                 </ul>
