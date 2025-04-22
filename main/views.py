@@ -135,7 +135,15 @@ def Home(request):
 @login_required(login_url='Login')
 def Types(request):
     types = Tag.objects.all()
-    context = {"types": types}
+    products = Product.objects.all()
+
+    for product in products:
+        if product.file:
+            pptx_url = product.file.url
+            image_folder = pptx_url.replace(f'{product.file.name.split('/')[-1]}','')
+            product.image_preview = f'{image_folder}slide1.jpg'
+
+    context = {"types": types, 'products': products}
     return render(request, 'html/types.html', context)
 
 @login_required(login_url='Login')

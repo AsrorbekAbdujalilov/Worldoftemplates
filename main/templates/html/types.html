@@ -9,5 +9,14 @@
     {% for type in types %}
         <a href="{% url 'typeproducts' type.tag_name %}" class="relatedp-format">{{type.tag_name}}</a>
     {% endfor %}
+    <p class="relatedparagraph" style="margin-top: 40px;" >ALL PRESENTATIONS</p>
+    <div class="related">
+    {% for product in products %}
+    <a class="related-presentations" href="{% url 'Product' product.id %}">
+        <img class="related-photo" src="{{ product.image_preview }}" alt="Related {{ related.product_name }}">
+        <button class="relatedp-format">{{product.product_name}}</button>
+    </a>
+    {% endfor %}
+    </div>
 </div>
 {% endblock %}
