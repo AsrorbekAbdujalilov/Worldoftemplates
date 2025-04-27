@@ -125,9 +125,8 @@ def Home(request):
 
         for product in products:
             if product.file:
-                pptx_url = product.file.url
-                image_folder = pptx_url.replace(f'{product.file.name.split('/')[-1]}','')
-                product.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+                pptx_folder = os.path.dirname(product.file.name)          
+                product.image_preview = f'/media/{pptx_folder}/slide1.jpg'
 
     context = {'types':types, 'tag_products':tag_products}
     return render(request, 'html/home.html', context)
@@ -139,9 +138,8 @@ def Types(request):
 
     for product in products:
         if product.file:
-            pptx_url = product.file.url
-            image_folder = pptx_url.replace(f'{product.file.name.split('/')[-1]}','')
-            product.image_preview = f'{image_folder}slide1.jpg'
+            pptx_folder = os.path.dirname(product.file.name)          
+            product.image_preview = f'/media/{pptx_folder}/slide1.jpg'
 
     context = {"types": types, 'products': products}
     return render(request, 'html/types.html', context)
@@ -154,9 +152,8 @@ def ProductType(request, type):
 
     for related in relateds:
         if related.file:
-            pptx_url = related.file.url
-            image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')
-            related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+            pptx_folder = os.path.dirname(related.file.name)          
+            related.image_preview = f'/media/{pptx_folder}/slide1.jpg'
 
     context = {'relateds':relateds, 'types':types}
     return render(request, 'html/ProductType.html', context)
@@ -177,9 +174,8 @@ def searchrelatedProduct(request):
 
         for related in relateds:
             if related.file:
-                pptx_url = related.file.url
-                image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')
-                related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+                pptx_folder = os.path.dirname(related.file.name)          
+                related.image_preview = f'/media/{pptx_folder}/slide1.jpg'
 
         context = {'relateds': relateds, 'types':types}
         return render(request, 'html/relatedProduct.html', context)
@@ -195,9 +191,8 @@ def Products(request, pk):
 
     for related in relateds:
         if related.file:
-            pptx_url = related.file.url
-            image_folder = pptx_url.replace(f'{related.file.name.split('/')[-1]}','')            
-            related.image_preview = f'{image_folder}slide1.jpg'  # Ensure this path is valid
+            pptx_folder = os.path.dirname(related.file.name)          
+            related.image_preview = f'/media/{pptx_folder}/slide1.jpg'  # Ensure this path is valid
     
     if product.file:
         # Get the folder where images are stored
