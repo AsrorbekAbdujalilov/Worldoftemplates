@@ -9,3 +9,6 @@ OUR CRITERIA
 --> ANIMATIONS
 --> GAMES
 --> DESIGNS
+
+
+http://185.238.3.32/ IP of server
