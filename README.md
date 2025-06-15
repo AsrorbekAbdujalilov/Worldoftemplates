@@ -11,5 +11,5 @@ OUR CRITERIA
 --> DESIGNS
 
 
-http://185.238.3.32/ IP of server
+http://185.238.3.191/ IP of server
 https://templateworld.uz/
